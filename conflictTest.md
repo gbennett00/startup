@@ -1,2 +1,2 @@
 Original text
-This is the first change from GitHub
+This was the first change from GitHub, but it was modified locally. 
