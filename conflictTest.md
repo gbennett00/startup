@@ -1,2 +1,2 @@
 Original text
-This is the first change from GitHub
+This is the second change from GitHub
