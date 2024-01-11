@@ -1,5 +1,9 @@
 # Notes for CS 260 (Garrett Bennett)
 
+## Table of Contents
+1. [Git and GitHub](#git-and-github)
+
+
 ## Git and GitHub
 ### Making modifications
 1. Clone repository into local directory: `git clone <respository-url>`
