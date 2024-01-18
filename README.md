@@ -10,11 +10,12 @@ Do you love the family-favorite game Scrabble but wish it was more fast paced? B
 Can you tell I'm a little competitive with my dad?
 
 ### Design 
-![Login page](photos/IMG_0066.jpg)
+![Login page](photos/IMG_0066.JPG)
 
-![Start game page](photos/IMG_0067.jpg)
+![Start game page](photos/IMG_0067.JPG)
 
-![Gameplay page](photos/IMG_0068.jpg)
+![Gameplay page](photos/IMG_0068.JPG)
+
 Interaction with backend:
 ![Request sequence](photos/IMG_0069.JPG)
 
