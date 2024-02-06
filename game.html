@@ -3,7 +3,7 @@
     <head>
         <title>WordBlitz</title>
         <style>
-            body {
+            main {
                 display: flex;
             }
             table {
@@ -32,171 +32,187 @@
         </style>
     </head>
     <body>
-        <div class="column">
-            <h1>Tiles</h1>
-            <table>
-                <tr>
-                    <td>
-                        <div>A</div>
-                    </td>
-                    <td>
-                        <div>I</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>C</div>
-                    </td>
-                    <td>
-                        <div>Q</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>T</div>
-                    </td>
-                    <td>
-                        <div>V</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>O</div>
-                    </td>
-                </tr>
-            </table>
-            <button>Peel</button>
-        </div>
-        <div class="column">
-            <h1>WordBlitz</h1>
-            <p>Game ID: WHUT</p>
-            <p>Players: 4</p>
-            <table>
-                <tr>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div>D</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div>O</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div>G</div>
-                    </td>
-                    <td>
-                        <div>A</div>
-                    </td>
-                    <td>
-                        <div>M</div>
-                    </td>
-                    <td>
-                        <div>E</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                    <td>
-                        <div style="color: white; border: 3px solid gray;">I</div>
-                    </td>
-                </tr>
-            </table>        
-        </div>
-        <div class="column">
-            <table>
-                <tr>
-                    <th><h2>Player</h2></th>
-                    <th><h2>Tiles played</h2></th>
-                </tr>
-                <tr>
-                    <td>Sarah</td>
-                    <td>10/16</td>
-                </tr>
-                <tr>
-                    <td>Bob</td>
-                    <td>5/18</td>
-                </tr>
-                <tr>
-                    <td>Jimmy</td>
-                    <td>14/16</td>
-                </tr>
-            </table>
-            <div>
-                <h2>Tiles remaining in pile:</h2>
-                <h2 style="color: red">10</h2>
+        <header>
+            <h1>WordBlitz<sup>&reg;</sup></h1>
+            <nav>
+              <a href="index.html">Home</a>
+              <a href="game.html">Game</a>
+              <a href="start.html">Start</a>
+            </nav>
+        </header>
+        <main>
+            <div class="column">
+                <h1>Tiles</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <div>A</div>
+                        </td>
+                        <td>
+                            <div>I</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>C</div>
+                        </td>
+                        <td>
+                            <div>Q</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>T</div>
+                        </td>
+                        <td>
+                            <div>V</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>O</div>
+                        </td>
+                    </tr>
+                </table>
+                <button>Peel</button>
             </div>
-        </div>
+            <div class="column">
+                <h1>WordBlitz</h1>
+                <p>Game ID: WHUT</p>
+                <p>Players: 4</p>
+                <table>
+                    <tr>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div>D</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div>O</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div>G</div>
+                        </td>
+                        <td>
+                            <div>A</div>
+                        </td>
+                        <td>
+                            <div>M</div>
+                        </td>
+                        <td>
+                            <div>E</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                        <td>
+                            <div style="color: white; border: 3px solid gray;">I</div>
+                        </td>
+                    </tr>
+                </table>        
+            </div>
+            <div class="column">
+                <table>
+                    <tr>
+                        <th><h2>Player</h2></th>
+                        <th><h2>Tiles played</h2></th>
+                    </tr>
+                    <tr>
+                        <td>Sarah</td>
+                        <td>10/16</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>5/18</td>
+                    </tr>
+                    <tr>
+                        <td>Jimmy</td>
+                        <td>14/16</td>
+                    </tr>
+                </table>
+                <div>
+                    <h2>Tiles remaining in pile:</h2>
+                    <h2 style="color: red">10</h2>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <hr />
+            <span class="text-reset">Author: Garrett B.</span>
+            <br />
+            <a href="https://github.com/gbennett00/startup">GitHub</a>
+          </footer>
     </body>
 </html>
