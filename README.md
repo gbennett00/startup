@@ -38,3 +38,13 @@ This is how I plan to use each of the following technologies:
 - **Service** - Backend provides endpoints for loging in/registering, creating/joining a game, "peeling", and getting a new tile when a user finishes a round. 
 - **DB/Login** - Users must register/login before playing. This connects to a database to persist username, passwords, and stats (number of wins, highest score, etc)
 - **WebSocket** - As each user plays, other users are updated on their status. This is also used to maintain a current count of tiles remaining. 
+
+## HTML Deliverable
+- **Proper Structure** - I created a page for each component of my application and used the proper HTML tags (body, main, header, footer, etc) to organize each page. 
+- **Links** - There are expected linked between pages such as on click of the login button, but there are also links to each of the pages in each header. 
+- **3rd Party Service Calls** - Buttons act as placeholders, as they will trigger scripts that make these calls. 
+- **Text** - Textual content is all present and in the right place, with mock content as necessary.
+- **Images** - The only image I could think of to use was a picture in the about page. 
+- **Login page** - Login page allows users to login or sign up. The user's information can be found in the profile page, with their username being displayed on the game and start pages. 
+- **DB Placeholder** - The information from the profile page will come from the database.
+- **WebSocket Placeholder** - The information to the right of the game page will come from WebSocket communication. 
