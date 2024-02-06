@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Game</title>
+    <title>Join Game</title>
 </head>
 <body>
     <h1>Create a New Game</h1>
 
-    <button id="createGame">Create New Game</button>
+    <button onclick="createGame()" id="createGame">Create New Game</button>
 
-    <form>
+    <script>
+        function createGame() {
+            window.location.href = "game.html";
+        }
+    </script>
+
+    <form action="game.html">
         <label for="gamePin">Join game:</label>
         <input type="text" id="gamePin" name="gamePin" placeholder="game pin" required />
         <button type="submit">Start Game</button>
