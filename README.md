@@ -1,11 +1,11 @@
 For course notes, see [notes.md](notes.md)
 
-# Online Bananagrams
+# WordBlitz
 
 ## Specification Deliverable
 
 ### Elevator Pitch
-Do you love the family-favorite game Scrabble but wish it was more fast paced? Bananagrams is for you! Each person uses their letters to make their own combination of words, and the first person to use all of their tiles wins. The physical game is fun, but this online version gives you a chance to beat your dad even if he lives across the country! 
+Do you love the family-favorite game Scrabble but wish it was more fast paced? WordBlitz is for you! Each person uses their letters to make their own combination of words, and the first person to use all of their tiles wins. The physical game is fun, but this online version gives you a chance to beat your dad even if he lives across the country! 
 
 Can you tell I'm a little competitive with my dad?
 
