@@ -1,6 +1,6 @@
 For course notes, see [notes.md](notes.md)
 
-# WordBlitz
+# [WordBlitz](https://startup.wordblitz.click)
 
 ## Specification Deliverable
 
