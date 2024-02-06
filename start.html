@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Join Game</title>
+    </head>
+    <body>
+        <header>
+            <h1>WordBlitz<sup>&reg;</sup></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="game.html">Game</a>
+                <a href="start.html">Start</a>
+                <a href="about.html">About</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </header>
+        <main>
+            <h1>Create a New Game</h1>
+
+            <button onclick="createGame()" id="createGame">Create New Game</button>
+
+            <script>
+                function createGame() {
+                    window.location.href = "game.html";
+                }
+            </script>
+
+            <form action="game.html">
+                <label for="gamePin">Join game:</label>
+                <input type="text" id="gamePin" name="gamePin" placeholder="game pin" required />
+                <button type="submit">Start Game</button>
+            </form>
+        </main>
+        <footer>
+            <hr />
+            <span class="text-reset">Author: Garrett B.</span>
+            <br />
+            <a href="https://github.com/gbennett00/startup">GitHub</a>
+          </footer>
+    </body>
+</html>
