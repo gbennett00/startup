@@ -3,6 +3,9 @@
     <head>
         <title>WordBlitz</title>
         <style>
+            body {
+                display: flex;
+            }
             table {
                 border-collapse: collapse;
             }
@@ -21,10 +24,15 @@
                 width: 1em; 
                 height: 1em
             }
+            .column {
+                flex: 1;
+                padding: 20px;
+                box-sizing: border-box;
+            }
         </style>
     </head>
     <body>
-        <div style="width: 30%; float: left;">
+        <div class="column">
             <h1>Tiles</h1>
             <table>
                 <tr>
@@ -58,7 +66,7 @@
                 </tr>
             </table>
         </div>
-        <div style="margin-left: 0px">
+        <div class="column">
             <h1>WordBlitz</h1>
             <p>Game ID: WHUT</p>
             <p>Players: 4</p>
@@ -165,7 +173,7 @@
                 </tr>
             </table>        
         </div>
-        <div>
+        <div class="column">
             <table>
                 <tr>
                     <th><h2>Player</h2></th>
@@ -186,7 +194,7 @@
             </table>
             <div>
                 <h2>Tiles remaining in pile:</h2>
-                <h2 style="color: red;">10</h2>
+                <h2 style="color: red">10</h2>
             </div>
         </div>
     </body>
