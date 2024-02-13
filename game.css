@@ -1,0 +1,26 @@
+main {
+    display: flex;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+    text-align: center;
+    margin: 5px;
+    border-spacing: 10px;
+}
+td>div {
+    border: 3px solid black;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+    border-radius: 5px;
+    width: 1em; 
+    height: 1em
+}
+.column {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
