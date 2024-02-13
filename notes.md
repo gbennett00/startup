@@ -211,3 +211,14 @@ Here
 
 ### Declarations
 - [CSS Declarations Chart](https://github.com/webprogramming260/.github/blob/main/profile/css/declarations/declarations.md
+
+### Responsive Design
+| Value | Meaning |
+| ----- | ------- |
+| none | Don't display this element |
+| block | Display element w a width that fills its parent element (p/div do this by default) |
+| inline | Width as big as content (b/span do this by default) |
+| flex | Display in a flexible orientation |
+| grip | Display in a grid orientation |
+
+float: moves an element to the left or right of its container element and allows inline elements to wrap around it
