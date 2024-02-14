@@ -66,13 +66,13 @@ th, td {
     border-spacing: 10px;
 }
 td>div {
-    border: 3px solid black;
-    padding: 10px;
-    text-align: center;
-    margin: 5px;
-    border-radius: 5px;
-    width: 1em; 
-    height: 1em
+  border: 3px solid black;
+  padding: 10px;
+  text-align: center;
+  margin: 1px;
+  border-radius: 5px;
+  width: 3em;
+  height: 3em;
 }
 .column {
     flex: 1;
