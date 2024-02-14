@@ -37,21 +37,26 @@
             </nav>
           </header>
         <main>
-            <h1>Create a New Game</h1>
+            <div class="text-center">
+                <h1>Create a New Game</h1>
 
-            <button onclick="createGame()" id="createGame">Create New Game</button>
+                <button onclick="createGame()" class="btn btn-primary" id="createGame">Create New Game</button>
 
-            <script>
-                function createGame() {
-                    window.location.href = "game.html";
-                }
-            </script>
+                <script>
+                    function createGame() {
+                        window.location.href = "game.html";
+                    }
+                </script>
 
-            <form action="game.html">
-                <label for="gamePin">Join game:</label>
-                <input type="text" id="gamePin" name="gamePin" placeholder="game pin" required />
-                <button type="submit">Start Game</button>
-            </form>
+                
+
+                <h1 class="pt-5">Join Game</h1>
+
+                <form action="game.html" class="m-3 form-inline">
+                    <input type="text" id="gamePin" name="gamePin" placeholder="game pin" class="form-control" required />
+                    <button type="submit" class="btn btn-primary mt-3">Start Game</button>
+                </form>
+                </div> 
         </main>
         <footer class="bg-secondary">
             <div>
