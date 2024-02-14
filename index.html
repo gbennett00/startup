@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WordBlitz HTML</title>
     <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="index.css" />
 
     <!-- Include bootstrap CSS framework -->
     <link
@@ -38,19 +39,23 @@
       </nav>
     </header>
 
-    <main>
-      <h2>Welcome</h2>
-      <p>Login/sign up to play</p>
-      <form method="get" action="start.html">
-        <label for="email">Email</label>
-        <input type="text" id="email" placeholder="email"  required/>
+    <main class="container-fluid">
+      <div class="text-center">
+        <h2>Welcome</h2>
+        <p>Login/sign up to play</p>
+        <form method="get" action="start.html">
+          <label class="text-justify" for="email">Email</label>
+          <input type="text" id="email" placeholder="email"  required/>
 
-        <label for="password">Password</label>
-        <input type="text" id="password" placeholder="password" required/>
+          <label for="password">Password</label>
+          <input type="text" id="password" placeholder="password" required/>
 
-        <button type="submit">Login</button>
-        <button type="submit">Signup</button>
-      </form>
+          <div class="p-3">
+            <button class="btn btn-primary" type="submit">Login</button>
+            <button class="btn btn-primary" type="submit">Signup</button>
+          </div>
+        </form>
+      </div>
     </main>
     <footer class="bg-secondary">
       <div>
