@@ -48,3 +48,11 @@ This is how I plan to use each of the following technologies:
 - **Login page** - Login page allows users to login or sign up. The user's information can be found in the profile page, with their username being displayed on the game and start pages. 
 - **DB Placeholder** - The information from the profile page will come from the database.
 - **WebSocket Placeholder** - The information to the right of the game page will come from WebSocket communication. 
+
+## CSS Deliverable
+- **Prerequisites** - I deployed Simon CSS to prod, have a link to my GitHub startup repo, and am adding what I modified with this deliverable. I also have over 10 git commits, each containing distinct changes. 
+- **Header, footer, and main** - Headers are styled to use the Bootstrap navigation styling. The footer also uses Bootstrap styling. Each page uses different styling elements in the main content body.
+- **Navigation elements** - As stated above, I used Bootstrap to make my navigation look good. I made it so that the link to whichever page you're on is highlighted, as demonstrated in the Simon CSS project. 
+- **Window resizing** - Pages look good on different sized screens. 
+- **Application elements and text content** - Bootstrap was used to make elements such as tables, images, and inputs look professional. I also used consistent fonts throughout the application. 
+- **Applicaiton images** - I made my profile picture in the about page have rounded edges. 
