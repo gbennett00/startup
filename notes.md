@@ -23,6 +23,14 @@ Automatic merge failed; fix conflicts and then commit the result.
     1. Commit the resolution: `git commit -am "<commit message"`
     1. Push to GitHub: `git push`
 
+## AWS / DNS
+- Records: 
+  - A: domain name -> IP address
+  - CNAME: domain name -> other domain name
+  - NS: name of authoritative serves that give you authority to put DNS records in DNS server
+  - SOA: provides contact info abt owner
+- Caddy: directs web requests to either the file system (e.g. for html files) or to a service (e.g. to your server)
+
 ## HTML
 ### General Structure
 ```
@@ -44,6 +52,12 @@ Automatic merge failed; fix conflicts and then commit the result.
     </footer>
 </body>
 ```   
+- Element names: 
+  - p - paragraph
+  - nav - navigation
+  - ul - unordered list
+  - div - division
+  - b - bold
 ### Input Examples
 <details>
 <summary>Example from HW</summary>
@@ -195,22 +209,101 @@ Automatic merge failed; fix conflicts and then commit the result.
 Here
 </details>
 
+### Media
+- img: src has path to image
+- audio/video 
+  - src takes path to file
+  - controls gives users options to control
+  - autoplay starts audio as soon as loaded
+  - loop loops audio (might be only on audio)
+- scalable vector graphics (svg)
+  - renders graphics inline 
+- canvas
+  - facilitates 2D drawings and animations
+
 ## CSS
+### Associating CSS
+- style attribute:
+  - `<p style="color:green">CSS</p>`
+- HTML style element:
+  - ```
+    <head>
+          <style>
+            p {
+              color: green;
+            }
+          </style>
+        </head>
+    ```
+- link element to reference CSS file
+  - `<link rel="stylesheet" href="styles.css" />`
+
+## Box model
+- margin > border > padding > content
+
 ### Combinators
 | Combination | Example     | Description |
 | ----------- |-------------| ----------- |
+| Descendant | body section | Any section that is a descendant of a body |
 | Child	| section > p |	Any p that is a direct child of a section |
 | General sibling| 	p ~ div	   | Any p that has a div sibling |
 | Adjacent sibling| p + div     |	Any p that has an adjacent div sibling |
 
 ### Selector Types
 - ***Element type***: <element-type>
-- ***Class***: .<class>
+- ***Class***: .class-name
+  - Can also do p.class-name to modify all paragraphs with a class of class-name
 - ***ID***: #id
-- ***Attribute***: <element-type>[<attribute>='<wildcard>']
+- ***Attribute***: <element-type>[<attribute-name>='<wildcard-name>']
 
 ### Declarations
-- [CSS Declarations Chart](https://github.com/webprogramming260/.github/blob/main/profile/css/declarations/declarations.md
+- background-color	color	red	Fill the background color </br>
+- border	color width style	#fad solid medium	Sets the border using shorthand where any or all of the values may be provided </br>
+- border-radius	unit	50%	The size of the border radius </br>
+- box-shadow	x-offset y-offset blu-radius color	2px 2px 2px gray	Creates a shadow </br>
+- columns	number	3	Number of textual columns </br>
+- column-rule	color width style	solid thin black	Sets the border used between columns using border shorthand </br>
+- color	color	rgb(128, 0, 0)	Sets the text color </br>
+- cursor	type	grab	Sets the cursor to display when hovering over the element </br>
+- display	type	none	Defines how to display the element and its children </br>
+- filter	filter-function	grayscale(30%)	Applies a visual filter </br>
+- float	direction	right	Places the element to the left or right in the flow </br>
+- flex			Flex layout. Used for responsive design </br>
+- font	family size style	Arial 1.2em bold	Defines the text font using shorthand </br>
+- grid			Grid layout. Used for responsive design </br>
+- height	unit	.25em	Sets the height of the box </br>
+- margin	unit	5px 5px 0 0	Sets the margin spacing </br>
+- max-[width/height]	unit	20%	Restricts the width or height to no more than the unit </br>
+- min-[width/height]	unit	10vh	Restricts the width or height to no less than the unit </br>
+- opacity	number	.9	Sets how opaque the element is </br>
+- overflow	[visible/hidden/scroll/auto]	scroll	Defines what happens when the content does not fix in its box </br>
+- position	[static/relative/absolute/sticky]	absolute	Defines how the element is positioned in the document </br>
+- padding	unit	1em 2em	Sets the padding spacing </br>
+- left	unit	10rem	The horizontal value of a positioned element </br>
+- text-align	[start/end/center/justify]	end	Defines how the text is aligned in the element </br>
+- top	unit	50px	The vertical value of a positioned element </br>
+- transform	transform-function	rotate(0.5turn)	Applies a transformation to the element </br>
+- width	unit	25vmin	Sets the width of the box </br>
+- z-index	number	100	Controls the positioning of the element on the z axis </br>
+
+### Loading Fonts
+- @font-face { font-family: 'Quicksand'; src: url('https://cs260.click/fonts/quicksand.ttf'); }
+- @import url('https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap');
+
+### Animations
+@keyframes demo {
+from {
+font-size: 0vh;
+}
+
+95% {
+font-size: 21vh;
+}
+
+to {
+font-size: 20vh;
+}
+}
 
 ### Responsive Design
 | Value | Meaning |
@@ -221,4 +314,187 @@ Here
 | flex | Display in a flexible orientation |
 | grip | Display in a grid orientation |
 
-float: moves an element to the left or right of its container element and allows inline elements to wrap around it
+- float: moves an element to the left or right of its container element and allows inline elements to wrap around it
+- media: edit CSS based on orientation or window size
+  - @media (orientation: portrait) {
+    aside {
+    display: none;
+    }
+    }
+  - @media (max-height: 600px) {
+    header {
+    display: none;
+    }
+    footer {
+    display: none;
+    }
+    main {
+    flex: 1 100vh;
+    }
+    }
+- grid
+  - .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 300px;
+    grid-gap: 1em;
+    }
+- flex: useful when you want different parts of your app to be responsive to window resizes or orientation changes
+
+## JavaScript
+### Console
+- log special characters
+  - %s, string parameter
+  - %c, add CSS as last argument
+- time: 
+  - console.time("stuff")
+  - console.timeEnd("stuff") // then prints stuff: <amt-time>
+- count:
+  - console.count('a')  // prints a: 1
+  - console.count('a')  // prints a: 2
+
+### Adding JS
+- within content of \<script> element 
+  - \<script> function sayGoodbye() { alert('Goodbye'); } \</script>
+- src attribute of \<script> 
+  - \<script src="javascript.js">\</script>
+
+### Types
+- **Null** - 	The type of a variable that has not been assigned a value.
+- **Undefined** - 	The type of a variable that has not been defined.
+- **Boolean** - 	true or false.
+- **Number** - 	A 64-bit signed number.
+- **BigInt** - 	A number of arbitrary magnitude.
+- **String** - 	A textual sequence of characters.
+- **Symbol** - 	A unique value.
+- **Object** - 	A collection of properties represented by name-value pairs. Values can be of any type.	{a:3, b:'fish'}
+- **Function** - 	An object that has the ability to be called.	function a() {}
+- **Date** - 	Calendar dates and times.	new Date('1995-12-17')
+- **Array** - 	An ordered sequence of any type.	[3, 'fish']
+- **Map** - 	A collection of key-value pairs that support efficient lookups.	new Map()
+- **JSON** - 	A lightweight data-interchange format used to share information across programs.	{"a":3, "b":"fish"}
+
+### Operators
+- == uses falsy and truthy evaluations (e.g. 1 == '1', '' == false, both are true)
+- === is strict equality and !== is inequality
+
+### Arrays
+- **push** -	Add an item to the end of the array	a.push(4)
+- **pop** -	Remove an item from the end of the array	x = a.pop()
+- **slice** -	Return a sub-array	a.slice(1,-1)
+- **sort** -	Run a function to sort an array in place	a.sort((a,b) => b-a)
+- **values** -	Creates an iterator for use with a for of loop	for (i of a.values()) {...}
+- **find** -	Find the first item satisfied by a test function	a.find(i => i < 2)
+- **forEach** -	Run a function on each array item	a.forEach(console.log)
+- **reduce** -	Run a function to reduce each array item to a single item	a.reduce((a, c) => a + c)
+- **map** -	Run a function to map an array to a new array	a.map(i => i+i)
+- **filter** -	Run a function to remove items	a.filter(i => i%2)
+- **every** -	Run a function to test if all items match	a.every(i => i < 3)
+- **some** -	Run a function to test if any items match	a.some(i => 1 < 1)
+
+### JSON
+- **string** -	"crockford"
+- **number** -	42
+- **boolean** -	true
+- **array** -	[null,42,"crockford"]
+- **object** -	{"a":1,"b":"crockford"}
+- **null** -	null
+- example: 
+  - ```
+    {
+      "class": {
+      "title": "web programming",
+      "description": "Amazing"
+    },
+      "enrollment": ["Marco", "Jana", "فَاطِمَة"],
+      "start": "2025-02-01",
+      "end": null
+    }
+    ```
+- converting to JavaScript
+  - ```
+    const obj = { a: 2, b: 'crockford', c: undefined };
+    const json = JSON.stringify(obj);
+    const objFromJson = JSON.parse(json); 
+    console.log(obj, json, objFromJson);
+    ```
+
+### Objects
+- object from method
+  - ```
+    function Person(name) {
+      return {
+        name: name,
+        log: function () {
+          console.log('My name is ' + this.name);
+        },
+      };
+    }
+    
+    const p = new Person('Eich');
+    p.log();
+    // OUTPUT: My name is Eich
+    ```
+- object from class
+  - ```
+    class Person {
+      constructor(name) {
+        this.name = name;
+      }
+    
+      log() {
+        console.log('My name is ' + this.name);
+      }
+    }
+    
+    const p = new Person('Eich');
+    p.log();
+    // OUTPUT: My name is Eich
+    ```
+
+### DOM
+- get one element
+  - `document.querySelector('div');`
+- get all elements 
+  - `document.querySelectorAll('p');`
+- edit content
+  - child.textContent = 'newStuff'
+- modify html
+  - child.innerHtml = "\<div>New div\</div>"
+- event listener
+  - categories
+    - **Clipboard** -	Cut, copied, pasted
+    - **Focus** -	An element gets focus
+    - **Keyboard** -	Keys are pressed
+    - **Mouse** -	Click events
+    - **Text** - selection	When text is selected
+  - example:
+    - ```js
+      const submitDataEl = document.querySelector('#submitData');
+      submitDataEl.addEventListener('click', function (event) {
+        console.log(event.type);
+      });
+      ```
+
+### Regex
+- match
+  - return strings that match
+- replace
+  - replace matching regex (1st param) with new string (2nd param)
+- test
+  - return true if regex is found in string
+- flags (after regex: /regex/i, i is flag)
+  - _d_ - 	Generate indices for substring matches (hasIndices)
+  - _g_ - 	Global search (global)
+  - _i_ - 	Case-insensitive search (ignoreCase)
+  - _m_ - 	Allows ^ and $ to match next to newline characters (multiline)
+  - _s_ - 	Allows . to match newline characters (dotAll)
+  - _u_ - 	"Unicode"; treat a pattern as a sequence of Unicode code points (unicode)
+  - _v_ - 	An upgrade to the u mode with more Unicode features (unicodeSets)
+  - _y_ - 	Perform a "sticky" search that matches starting at the current position in the target string (sticky)
+
+### Rest and Spread
+- rest 
+  - way to allow variable arguments that are put in array
+- spread
+  - way to pass iterable argument as multiple arguments
