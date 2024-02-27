@@ -48,23 +48,39 @@
             <div class="text-center">
                 <h1>Create a New Game</h1>
 
-                <button onclick="createGame()" class="btn btn-primary" id="createGame">Create New Game</button>
-
-                <script>
-                    function createGame() {
-                        window.location.href = "game.html";
-                    }
-                </script>
-
-                
+                <button onclick="createGame()" class="btn btn-primary" id="createGame">Create New Game</button>             
 
                 <h1 class="pt-5">Join Game</h1>
 
-                <form action="game.html" class="m-3 form-inline">
-                    <input type="text" id="gamePin" name="gamePin" placeholder="game pin" class="form-control" required />
-                    <button type="submit" class="btn btn-primary mt-3">Start Game</button>
-                </form>
-                </div> 
+                <div class="m-3 form-inline">
+                    <input type="text" id="gamePinInput" name="gamePin" placeholder="game pin" class="form-control" required />
+                    <button onclick="joinGame()" class="btn btn-primary mt-3">Start Game</button>
+                </div>
+            </div> 
+
+            <script>
+              function createGame() {
+                const gamePin = generatePin();
+                localStorage.setItem("gamePin", gamePin);
+                window.location.href = "game.html";
+              }
+
+              function generatePin() {
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                let gamePin = '';
+                for (let i = 0; i < 4; i++) {
+                  gamePin += letters.charAt(Math.floor(Math.random() * 26));
+                }
+                console.log("Game pin: " + gamePin);
+                return gamePin;
+              }
+
+              function joinGame() {
+                const gamePin = document.getElementById("gamePinInput").value;
+                localStorage.setItem("gamePin", gamePin);
+                window.location.href = "game.html";
+              }
+            </script>
         </main>
         <footer class="bg-secondary">
             <div>
