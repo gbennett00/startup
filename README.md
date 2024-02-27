@@ -56,3 +56,7 @@ This is how I plan to use each of the following technologies:
 - **Window resizing** - Pages look good on different sized screens. 
 - **Application elements and text content** - Bootstrap was used to make elements such as tables, images, and inputs look professional. I also used consistent fonts throughout the application. 
 - **Applicaiton images** - I made my profile picture in the about page have rounded edges. 
+
+## JavaScript Deliverable
+- **Prerequisites** - I deployed Simon JavaScript to my production environment and have a link to my GitHub on my app's home page.
+- 
