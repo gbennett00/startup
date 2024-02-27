@@ -6,6 +6,7 @@
     <title>WordBlitz HTML</title>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="index.css" />
+    <script src="login.js"></script> 
 
     <!-- Include bootstrap CSS framework -->
     <link
@@ -43,18 +44,18 @@
       <div class="text-center">
         <h2>Welcome</h2>
         <p>Login/sign up to play</p>
-        <form method="get" action="start.html">
-          <label class="text-justify" for="email">Email</label>
-          <input type="text" id="email" placeholder="email"  required/>
+        <div>
+          <label class="text-justify" for="username">Username</label>
+          <input type="text" id="username" placeholder="username"  required/>
 
           <label for="password">Password</label>
           <input type="text" id="password" placeholder="password" required/>
 
           <div class="p-3">
-            <button class="btn btn-primary" type="submit">Login</button>
-            <button class="btn btn-primary" type="submit">Signup</button>
+            <button class="btn btn-primary" id="login" onclick="login()">Login</button>
+            <button class="btn btn-primary" id="signup" onclick="signup()">Signup</button>
           </div>
-        </form>
+        </div>
       </div>
     </main>
     <footer class="bg-secondary">
