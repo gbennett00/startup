@@ -82,7 +82,7 @@
             </div>
             <div class="column text-center">
                 <h1>WordBlitz</h1>
-                <p>Game ID: WHUT</p>
+                <p id="game-id">Game ID: WHUT</p>
                 <p>Players: 4</p>
                 <table>
                     <tr>
@@ -187,6 +187,18 @@
                     </tr>
                 </table>        
             </div>
+
+            <script>
+                // Get the game pin from local storage
+                let gamePin = localStorage.getItem("gamePin");
+                if (gamePin) {
+                    document.getElementById("game-id").innerText = "Game ID: " + gamePin;
+                } else {
+                    alert("Please create or join a game");
+                    window.location.href = "start.html";
+                }
+            </script>
+
             <div class="column">
                 <table class="table text-center table-striped">
                     <tr>
