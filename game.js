@@ -56,6 +56,21 @@ function setUpPage() {
                 const selected = document.querySelector(".selected");
                 if (selected) {
                     replaceTile(selected, tile);
+                } else {
+                    // removeTile(tile);
+                    const pile = document.getElementById("userPile");
+                    let lastRow = pile.children[pile.children.length-1];
+                    if (lastRow.children.length === 3) {
+                        const newRow = document.createElement("tr");
+                        pile.appendChild(newRow);
+                        lastRow = newRow;
+                    }
+                    const newTile = document.createElement("td");
+                    newTile.appendChild(tile.children[0].cloneNode(true));
+                    lastRow.appendChild(newTile);
+
+                    // remove from board
+                    tile.children[0].replaceChildren();
                 }
             });
             tr.appendChild(tile);
@@ -99,6 +114,18 @@ function replaceTile(selected, tile) {
     }
     tile.replaceChildren(selected);
     selected.classList.remove("selected");
+    lastRow.removeChild(lastTile);
+    if (lastRow.children.length === 0) {
+        pile.removeChild(lastRow);
+    }
+}
+
+function removeTile(tile) {
+    const pile = document.getElementById("userPile");
+    const lastRow = pile.children[pile.children.length-1];
+    const lastTile = lastRow.children[lastRow.children.length-1];
+
+    
     lastRow.removeChild(lastTile);
     if (lastRow.children.length === 0) {
         pile.removeChild(lastRow);
