@@ -3,6 +3,7 @@
     <head>
         <title>WordBlitz</title>
         <link rel="stylesheet" href="game.css">
+        <script src="game.js"></script>
         
         <!-- Include bootstrap CSS framework -->
         <link
@@ -35,14 +36,6 @@
               </menu>
               <h4 id="username-display" class="m-3">Please Login</h2>
             </nav>
-
-            <script>
-                // Get the username from local storage
-                let username = localStorage.getItem("username");
-                if (username) {
-                    document.getElementById("username-display").innerText = "Player: " + username;
-                }
-            </script>
           </header>
         <main>
             <div class="column">
@@ -187,20 +180,8 @@
                     </tr>
                 </table>        
             </div>
-
-            <script>
-                // Get the game pin from local storage
-                let gamePin = localStorage.getItem("gamePin");
-                if (gamePin) {
-                    document.getElementById("game-id").innerText = "Game ID: " + gamePin;
-                } else {
-                    alert("Please create or join a game");
-                    window.location.href = "start.html";
-                }
-            </script>
-
             <div class="column">
-                <table class="table text-center table-striped">
+                <table class="table text-center table-striped" id="playerTable">
                     <tr>
                         <th><h2>Player</h2></th>
                         <th><h2>Tiles played</h2></th>
@@ -220,10 +201,13 @@
                 </table>
                 <div class="text-center">
                     <h2>Tiles remaining in pile:</h2>
-                    <h2 class="text-danger">10</h2>
+                    <h2 id="numTiles" class="text-danger">10</h2>
                 </div>
             </div>
         </main>
+        <script>
+            setUpPage();
+        </script>
         <footer class="bg-secondary">
             <div>
               <span class="text-reset">Author: Garrett B.</span>
