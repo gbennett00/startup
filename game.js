@@ -44,6 +44,26 @@ function setUpPage() {
     rows.push(tr);
     pile.replaceChildren(...rows);
 
+    // Initialize board
+    const board = document.getElementById("board");
+    rows = [];
+    for (let i = 0; i < 5; i++) {
+        tr = document.createElement("tr");
+        for (let j = 0; j < 5; j++) {
+            const tile = document.createElement("td");
+            tile.innerHTML = "<div></div>";
+            tile.addEventListener("click", function() {
+                const selected = document.querySelector(".selected");
+                if (selected) {
+                    replaceTile(selected, tile);
+                }
+            });
+            tr.appendChild(tile);
+        }
+        rows.push(tr);
+    }
+    board.replaceChildren(...rows);
+
     // Create player table
     const table = document.getElementById("playerTable");
     rows = [document.createElement("tr")];
@@ -66,6 +86,23 @@ function setUpPage() {
     table.replaceChildren(...rows);
     
     // mockWebSocket(players, tiles);
+}
+
+function replaceTile(selected, tile) {
+    const pile = document.getElementById("userPile");
+    const lastRow = pile.children[pile.children.length-1];
+    const lastTile = lastRow.children[lastRow.children.length-1];
+    const movedTile = selected.parentElement;
+
+    if (movedTile !== lastTile) {
+        movedTile.replaceChildren(lastTile.children[0]);
+    }
+    tile.replaceChildren(selected);
+    selected.classList.remove("selected");
+    lastRow.removeChild(lastTile);
+    if (lastRow.children.length === 0) {
+        pile.removeChild(lastRow);
+    }
 }
 
 async function mockWebSocket(players, tiles) {
