@@ -33,7 +33,7 @@
               <a class="nav-link" href="about.html">About</a>
             </li>
           </menu>
-          <h4 class="m-3">Player: Sarah</h2>
+          <h4 class="m-3" id="username-display">Player: Sarah</h2>
         </nav>
       </header>
     <main>
@@ -43,20 +43,34 @@
                 <thead>
                     <tr>
                         <td>Username:</td>
-                        <td>FakeUser123</td>
+                        <td id="Username">FakeUser123</td>
                     </tr>
                     <tr>
                         <td>Number of Wins:</td>
-                        <td>3</td>
+                        <td id="numWins">3</td>
                     </tr>
                     <tr>
                         <td>Highest Scoring Game:</td>
-                        <td>72</td>
+                        <td id="highestScoringGame">72</td>
                     </tr>
                 </thead>
             </table>
         </div>
     </main>
+    <script>
+        // Get the username from local storage
+        let username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("username-display").innerText = "Player: " + username;
+        }
+
+        localStorage.setItem("numWins", 3);
+        localStorage.setItem("highestScoringGame", 72);
+
+        document.getElementById("numWins").innerText = localStorage.getItem("numWins");
+        document.getElementById("highestScoringGame").innerText = localStorage.getItem("highestScoringGame");
+        document.getElementById("Username").innerText = username;
+    </script>
     <footer class="bg-secondary">
         <div>
           <span class="text-reset">Author: Garrett B.</span>
