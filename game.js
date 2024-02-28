@@ -47,6 +47,7 @@ function setUpPage() {
                 removeTile(tile);
                 if (selected) {
                     replaceTile(selected, tile);
+                    expandTable(tile);
                 }
             });
             tr.appendChild(tile);
@@ -160,6 +161,76 @@ function removeTile(tile) {
 
     // remove from board
     tile.innerHTML = "<div></div>";
+}
+
+function expandTable(tile) {
+    const board = document.getElementById("board");
+    const row = tile.parentElement;
+    let rowLength = row.children.length;
+
+    if (row === board.children[board.children.length-1]) {
+        const newNode = document.createElement("tr");
+        for (let i = 0; i < rowLength; i++) {
+            const newTile = document.createElement("td");
+            newTile.innerHTML = "<div></div>";
+            newTile.addEventListener("click", function() {
+                const selected = document.querySelector(".selected");
+                removeTile(newTile);
+                if (selected) {
+                    replaceTile(selected, newTile);
+                    expandTable(newTile);
+                }
+            });
+            newNode.appendChild(newTile);
+        }
+        board.appendChild(newNode);
+    } else if (row === board.children[0]) {
+        const newNode = document.createElement("tr");
+        for (let i = 0; i < rowLength; i++) {
+            const newTile = document.createElement("td");
+            newTile.innerHTML = "<div></div>";
+            newTile.addEventListener("click", function() {
+                const selected = document.querySelector(".selected");
+                removeTile(newTile);
+                if (selected) {
+                    replaceTile(selected, newTile);
+                    expandTable(newTile);
+                }
+            });
+            newNode.appendChild(newTile);
+        }
+        board.prepend(newNode);
+    }
+
+    if (tile === row.children[rowLength-1]) {
+        for (const row in board.children) {
+            const newNode = document.createElement("td");
+            newNode.innerHTML = "<div></div>";
+            newNode.addEventListener("click", function() {
+                const selected = document.querySelector(".selected");
+                removeTile(newNode);
+                if (selected) {
+                    replaceTile(selected, newNode);
+                    expandTable(newNode);
+                }
+            });
+            board.children[row].appendChild(newNode);
+        }
+    } else if (tile === row.children[0]) {
+        for (const row in board.children) {
+            const newNode = document.createElement("td");
+            newNode.innerHTML = "<div></div>";
+            newNode.addEventListener("click", function() {
+                const selected = document.querySelector(".selected");
+                removeTile(newNode);
+                if (selected) {
+                    replaceTile(selected, newNode);
+                    expandTable(newNode);
+                }
+            });
+            board.children[row].prepend(newNode);
+        }
+    }
 }
 
 function pileClickListener() {
