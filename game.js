@@ -44,10 +44,9 @@ function setUpPage() {
             tile.innerHTML = "<div></div>";
             tile.addEventListener("click", function() {
                 const selected = document.querySelector(".selected");
+                removeTile(tile);
                 if (selected) {
                     replaceTile(selected, tile);
-                } else {
-                    removeTile(tile);
                 }
             });
             tr.appendChild(tile);
@@ -68,7 +67,7 @@ function setUpPage() {
             const row = document.createElement("tr");
             row.id = player;
             row.appendChild(document.createElement("td")).innerHTML = player;
-            row.appendChild(document.createElement("td")).innerHTML = "0/16";
+            row.appendChild(document.createElement("td")).innerHTML = "0/12";
             rows.push(row);
 
             localStorage.setItem(player + "-tiles-played", "0");
@@ -77,7 +76,7 @@ function setUpPage() {
     }
     table.replaceChildren(...rows);
     
-    // mockWebSocket(players, tiles);
+    // mockWebSocket(players, 10);
 }
 
 function replaceTile(selected, tile) {
@@ -98,7 +97,6 @@ function replaceTile(selected, tile) {
 }
 
 function removeTile(tile) {
-    console.log(tile.innerHTML);
     if (tile.innerHTML === "<div></div>") {
         // do nothing if blank tile
         return;
