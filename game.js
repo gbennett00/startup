@@ -28,17 +28,7 @@ function setUpPage() {
         }
         const tile = document.createElement("td");
         tile.innerHTML = "<div>" + originalTiles[i] + "</div>";
-        tile.addEventListener("click", function() {
-            if (tile.children[0].classList.contains("selected")) {
-                tile.children[0].classList.remove("selected");
-                return;
-            }
-            const prev = document.querySelector(".selected");
-            if (prev) {
-                prev.classList.remove("selected");
-            }
-            tile.children[0].classList.add("selected");
-        });
+        tile.addEventListener("click", pileClickListener);
         tr.appendChild(tile);
     }
     rows.push(tr);
@@ -57,20 +47,7 @@ function setUpPage() {
                 if (selected) {
                     replaceTile(selected, tile);
                 } else {
-                    // removeTile(tile);
-                    const pile = document.getElementById("userPile");
-                    let lastRow = pile.children[pile.children.length-1];
-                    if (lastRow.children.length === 3) {
-                        const newRow = document.createElement("tr");
-                        pile.appendChild(newRow);
-                        lastRow = newRow;
-                    }
-                    const newTile = document.createElement("td");
-                    newTile.appendChild(tile.children[0].cloneNode(true));
-                    lastRow.appendChild(newTile);
-
-                    // remove from board
-                    tile.children[0].replaceChildren();
+                    removeTile(tile);
                 }
             });
             tr.appendChild(tile);
@@ -121,15 +98,38 @@ function replaceTile(selected, tile) {
 }
 
 function removeTile(tile) {
-    const pile = document.getElementById("userPile");
-    const lastRow = pile.children[pile.children.length-1];
-    const lastTile = lastRow.children[lastRow.children.length-1];
-
-    
-    lastRow.removeChild(lastTile);
-    if (lastRow.children.length === 0) {
-        pile.removeChild(lastRow);
+    console.log(tile.innerHTML);
+    if (tile.innerHTML === "<div></div>") {
+        // do nothing if blank tile
+        return;
     }
+    const pile = document.getElementById("userPile");
+    let lastRow = pile.children[pile.children.length-1];
+    if (lastRow.children.length === 3) {
+        const newRow = document.createElement("tr");
+        pile.appendChild(newRow);
+        lastRow = newRow;
+    }
+    const newTile = document.createElement("td");
+    newTile.appendChild(tile.children[0].cloneNode(true));
+    newTile.addEventListener("click", pileClickListener);
+    lastRow.appendChild(newTile);
+
+    // remove from board
+    tile.innerHTML = "<div></div>";
+}
+
+function pileClickListener() {
+    const tile = this;
+    if (tile.children[0].classList.contains("selected")) {
+        tile.children[0].classList.remove("selected");
+        return;
+    }
+    const prev = document.querySelector(".selected");
+    if (prev) {
+        prev.classList.remove("selected");
+    }
+    tile.children[0].classList.add("selected");
 }
 
 async function mockWebSocket(players, tiles) {
