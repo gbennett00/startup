@@ -17,7 +17,7 @@ function setUpPage() {
 
     // initialize pile
     const pile = document.getElementById("userPile");
-    const originalTiles = "ANDRWDOGAMEIDE";
+    const originalTiles = "ANDRW"; //DOGAMEIDE";
     localStorage.setItem("userPile", originalTiles);
     let rows = [];
     let tr = document.createElement("tr");
@@ -48,6 +48,13 @@ function setUpPage() {
                 if (selected) {
                     replaceTile(selected, tile);
                     expandTable(tile);
+
+                    const pile = document.getElementById("userPile");
+                    console.log(pile.children.length);
+                    if (pile.children.length === 1) {
+                        alert("You win!");
+                        window.location.href = "start.html";
+                    }
                 }
             });
             tr.appendChild(tile);
