@@ -15,9 +15,38 @@ function setUpPage() {
         window.location.href = "start.html";
     }
 
+    // initialize pile
+    const pile = document.getElementById("userPile");
+    const originalTiles = "ANDRWDOGAMEIDE";
+    localStorage.setItem("userPile", originalTiles);
+    let rows = [];
+    let tr = document.createElement("tr");
+    for (let i = 0; i < originalTiles.length; i++) {
+        if (i % 3 === 0) {
+            rows.push(tr);
+            tr = document.createElement("tr");
+        }
+        const tile = document.createElement("td");
+        tile.innerHTML = "<div>" + originalTiles[i] + "</div>";
+        tile.addEventListener("click", function() {
+            if (tile.children[0].classList.contains("selected")) {
+                tile.children[0].classList.remove("selected");
+                return;
+            }
+            const prev = document.querySelector(".selected");
+            if (prev) {
+                prev.classList.remove("selected");
+            }
+            tile.children[0].classList.add("selected");
+        });
+        tr.appendChild(tile);
+    }
+    rows.push(tr);
+    pile.replaceChildren(...rows);
+
     // Create player table
     const table = document.getElementById("playerTable");
-    const rows = [document.createElement("tr")];
+    rows = [document.createElement("tr")];
     rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Player</h2>';
     rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Tiles played</h2>';
 
@@ -31,12 +60,10 @@ function setUpPage() {
             rows.push(row);
 
             localStorage.setItem(player + "-tiles-played", "0");
-            localStorage.setItem(player + "-tiles", "16");
+            localStorage.setItem(player + "-tiles", "12");
         }
     }
     table.replaceChildren(...rows);
-
-    let tiles = 10; 
     
     // mockWebSocket(players, tiles);
 }

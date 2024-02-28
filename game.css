@@ -1,57 +1,56 @@
 body {
-    display: flex;
-    flex-direction: column;
-    min-width: 375px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-width: 375px;
+}
+
+header {
+  flex: 0 80px;
+}
+
+main {
+  flex: 1 calc(100vh - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+footer {
+  flex: 0 30px;
+}
+
+menu {
+  flex: 1;
+  display: flex;
+  /*  overwrite Bootstrap so the menu does not wrap */
+  flex-direction: row !important;
+  list-style: none;
+}
+
+.navbar-brand {
+  padding-left: 0.3em;
+  border-bottom: solid rgb(182, 182, 182) thin;
+}
+
+menu .nav-item {
+  padding: 0 0.3em;
+}
+
+footer a {
+  float: right;
+}
+
+@media (max-height: 600px) {
   header {
-    flex: 0 80px;
+    display: none;
   }
-  
-  main {
-    flex: 1 calc(100vh - 110px);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-  
   footer {
-    flex: 0 30px;
+    display: none;
   }
-  
-  menu {
-    flex: 1;
-    display: flex;
-    /*  overwrite Bootstrap so the menu does not wrap */
-    flex-direction: row !important;
-    list-style: none;
+  main {
+    flex: 1 100vh;
   }
-  
-  .navbar-brand {
-    padding-left: 0.3em;
-    border-bottom: solid rgb(182, 182, 182) thin;
-  }
-  
-  menu .nav-item {
-    padding: 0 0.3em;
-  }
-  
-  footer a {
-    float: right;
-  }
-  
-  @media (max-height: 600px) {
-    header {
-      display: none;
-    }
-    footer {
-      display: none;
-    }
-    main {
-      flex: 1 100vh;
-    }
-  }
-  
+}
 
 main {
     display: flex;
@@ -73,9 +72,32 @@ td>div {
   border-radius: 5px;
   width: 3em;
   height: 3em;
+  cursor: pointer;
 }
+
+.selected {
+  background-color: gray;
+}
+/* 
+.tile {
+  border: 3px solid black;
+  padding: 10px;
+  text-align: center;
+  margin: 1px;
+  border-radius: 5px;
+  width: 3em;
+  height: 3em;
+} */
+
 .column {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
 }
+/* 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-auto-rows: 30px;
+  grid-gap: 2em;
+} */
