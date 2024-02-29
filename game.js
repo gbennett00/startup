@@ -87,7 +87,7 @@ function setUpPage() {
     totalTiles.innerText = startingTiles;
     localStorage.setItem("numTiles", startingTiles);
     
-    // mockWebSocket(players, startingTiles);
+    mockWebSocket(players, startingTiles);
 }
 
 function peel() {
