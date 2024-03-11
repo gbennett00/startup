@@ -1,5 +1,13 @@
-let database = new Map();
-database.set('admin', 'admin');
+let database;
+
+if (localStorage.getItem('users') == null) { 
+    console.log('Creating database');
+    database = new Map();
+    database.set('admin', 'admin');
+    saveDatabase();
+} else {
+    updateDatabase();
+}
 
 function login() {
     const username = document.getElementById('username').value;
@@ -22,8 +30,17 @@ function signup() {
         alert('Username and password cannot be empty');
     } else {
         database.set(username, password);
+        saveDatabase();
         localStorage.setItem('username', username);
         window.location = "start.html"; // Redirecting to other page.
         return false;
     }
+}
+
+function saveDatabase() {
+    localStorage.setItem('users', JSON.stringify(Array.from(database.entries())));
+}
+
+function updateDatabase() {
+    database = new Map(JSON.parse(localStorage.getItem('users')));
 }
