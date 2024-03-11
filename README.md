@@ -63,3 +63,10 @@ This is how I plan to use each of the following technologies:
 - **Future database** - On top of using JavaScript to mock username/password data, I used JavaScript to display profile information. Currently, it just saves mock data to local storage then retreives those statistics. 
 - **Future WebSocket** - JavaScript is used to continually update the player board with how many tiles each player has played. I mocked a WebSocket connection by using a randomizer and timeouts to have the players make moves at varying intervals. 
 - **Application's interaction logic** - I used JavaScript to handle the logic for users to either create a game and wait for other players to join or join an existing game. It was also used to enable players to move tiles from their pile into a grid, remove tiles from the grid, or 'peel' (exchange one tile for three different ones). The board in the middle is dynamically sized, so placing tiles along the edge will generate another row/column so that you may always play next to any tile. When someone wins, an alert is shown then the user is redirected to the start page. 
+
+## Service Deliverable
+- **Node.js/Express HTTP service** - done
+- **Static middleware for frontend** - done
+- **Calls to third party endpoints** - Calls a quote API and displays the quote on the about page
+- **Backend service endpoints** - Endpoints that verify all words on a board are valid, score a board, and return a user's high score and number of wins
+- **Fronted calls service endpoints** - The frontend calls the endpoints to verify and score a board anytime all tiles are played. It uses the profile endpoint to display a user's game statistics. 
