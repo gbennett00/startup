@@ -27,6 +27,7 @@ apiRouter.post('/checkBoard', (req, res) => {
 apiRouter.post('/score', (req, res) => {
     const board = req.body.board;
     const score = getScore(board);
+    updateHighScore(score);
     res.send(score.toString());
 });
 
@@ -107,4 +108,11 @@ function getScore(board) {
         }
     }
     return score;
+}
+
+let highScore = 0;
+function updateHighScore(score) {
+    if (score > highScore) {
+        highScore = score;
+    }
 }
