@@ -16,7 +16,12 @@ app.use((_req, res) => {
 
 apiRouter.post('/checkBoard', (req, res) => {
     const board = req.body.board;
-    res.send(checkBoard(board));
+    const result = checkBoard(board);
+    if (result === 'valid') {
+        res.json({ valid: true });
+    } else {
+        res.json({ valid: false, word: result });
+    }
 });
 
 app.listen(port, () => {
@@ -34,7 +39,7 @@ fs.readFileSync('words.txt', 'utf8').split('\n').forEach(line => {
 
 function checkBoard(board) {
     if (board === null || board.length === 0 || board[0].length === 0) {
-        return false;
+        return 'invalid board input';
     }
 
     let word = '';
@@ -44,14 +49,14 @@ function checkBoard(board) {
                 word += board[i][j];
             } else if (word.length > 0) {
                 if (word.length > 1 && !words.has(word)) {
-                    return false;
+                    return word;
                 }
                 word = '';
             }
         }
         if (word.length > 0) {
             if (word.length > 1 && !words.has(word)) {
-                return false;
+                return word;
             }
             word = '';
         }
@@ -63,18 +68,18 @@ function checkBoard(board) {
                 word += board[i][j];
             } else if (word.length > 0) {
                 if (word.length > 1 && !words.has(word)) {
-                    return false;
+                    return word;
                 }
                 word = '';
             }
         }
         if (word.length > 0) {
             if (word.length > 1 && !words.has(word)) {
-                return false;
+                return word;
             }
             word = '';
         }
     }
 
-    return true;
+    return 'valid';
 }

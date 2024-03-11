@@ -17,7 +17,7 @@ function setUpPage() {
 
     // initialize pile
     const pile = document.getElementById("userPile");
-    const originalTiles = "ANDRWDOGAMEIDE";
+    const originalTiles = "AND";
     localStorage.setItem("userPile", originalTiles);
     let rows = [];
     let tr = document.createElement("tr");
@@ -50,18 +50,18 @@ function setUpPage() {
                     expandTable(tile);
 
                     if (document.querySelectorAll("#userPile td").length === 0) {
-                        const isValid = await fetch('/api/checkBoard', {
+                        const response = await fetch('/api/checkBoard', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 board: getBoard(),
                             })
                         }).then(response => response.json());
-                        if (isValid) {
+                        if (response.valid) {
                             alert("You win!");
                             window.location.href = "start.html";
                         } else {
-                            alert("Invalid word");
+                            alert("Invalid word: " + response.word);
                         }
                     }
                 }
@@ -98,7 +98,7 @@ function setUpPage() {
     totalTiles.innerText = startingTiles;
     localStorage.setItem("numTiles", startingTiles);
     
-    mockWebSocket(players, startingTiles);
+    // mockWebSocket(players, startingTiles);
 }
 
 function getBoard() {
