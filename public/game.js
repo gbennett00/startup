@@ -17,7 +17,7 @@ function setUpPage() {
 
     // initialize pile
     const pile = document.getElementById("userPile");
-    const originalTiles = "AND";
+    const originalTiles = "ANDRWDOGAMEIDE";
     localStorage.setItem("userPile", originalTiles);
     let rows = [];
     let tr = document.createElement("tr");
@@ -49,16 +49,24 @@ function setUpPage() {
                     replaceTile(selected, tile);
                     expandTable(tile);
 
+                    const finishedBoard = getBoard();
                     if (document.querySelectorAll("#userPile td").length === 0) {
-                        const response = await fetch('/api/checkBoard', {
+                        let response = await fetch('/api/checkBoard', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                board: getBoard(),
+                                board: finishedBoard,
                             })
                         }).then(response => response.json());
                         if (response.valid) {
-                            alert("You win!");
+                            response = await fetch('/api/score', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    board: finishedBoard,
+                                })
+                            }).then(response => response.json());
+                            alert("You win with a score of " + response + "!");
                             window.location.href = "start.html";
                         } else {
                             alert("Invalid word: " + response.word);

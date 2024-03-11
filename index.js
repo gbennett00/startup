@@ -24,6 +24,12 @@ apiRouter.post('/checkBoard', (req, res) => {
     }
 });
 
+apiRouter.post('/score', (req, res) => {
+    const board = req.body.board;
+    const score = getScore(board);
+    res.send(score.toString());
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -82,4 +88,23 @@ function checkBoard(board) {
     }
 
     return 'valid';
+}
+
+const values = { 'E':1, 'A':1, 'I':1, 'O':1, 'N':1, 'R':1, 'T':1, 'L':1, 'S':1, 'U':1, 'D':2, 'G':2, 'B':3, 'C':3, 'M':3, 'P':3, 'F':4, 'H':4, 'V':4, 'W':4, 'Y':4, 'K':5, 'J':8, 'X':8, 'Q':10, 'Z':10 };
+
+function getScore(board) {
+    let score = 0;
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            if (board[i][j] !== ' ') {
+                if (values[board[i][j]] !== undefined) {
+                    score += values[board[i][j]];
+                } else {
+                    console.log('Invalid character on board');
+                    return -1;
+                }
+            }
+        }
+    }
+    return score;
 }
