@@ -31,8 +31,8 @@ apiRouter.post('/score', (req, res) => {
     res.send(score.toString());
 });
 
-apiRouter.get('/score', (_req, res) => {
-    res.send(highScore.toString());
+apiRouter.get('/profile', (_req, res) => {
+    res.send({ score: highScore, wins: numWins });
 });
 
 app.listen(port, () => {
@@ -115,7 +115,9 @@ function getScore(board) {
 }
 
 let highScore = 0;
+let numWins = 0;
 function updateHighScore(score) {
+    numWins++;      // score is only updated when you win
     if (score > highScore) {
         highScore = score;
     }

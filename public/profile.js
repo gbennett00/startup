@@ -5,14 +5,14 @@ async function setUpProfile() {
         document.getElementById("username-display").innerText = "Player: " + username;
     }
 
-    const score = await fetch("/api/score", {
+    const response = await fetch("/api/profile", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
     }).then(response => response.json());
 
-    document.getElementById("numWins").innerText = score;
-    document.getElementById("highestScoringGame").innerText = 72;
+    document.getElementById("numWins").innerText = response.wins;
+    document.getElementById("highestScoringGame").innerText = response.score;
     document.getElementById("Username").innerText = username;
 }
