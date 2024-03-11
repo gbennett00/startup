@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const app = express();
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -19,8 +20,12 @@ app.listen(port, () => {
 
 // add words for testing
 const words = new Set();
-words.add('dad');
-words.add('dude');
+fs.readFileSync('words.txt', 'utf8').split('\n').forEach(line => {
+    const word = line.toLowerCase().trim();
+    if (word.length > 0) {
+        words.add(word);
+    }
+});
 
 function checkBoard(board) {
     if (board === null || board.length === 0 || board[0].length === 0) {
