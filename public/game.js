@@ -42,7 +42,7 @@ function setUpPage() {
         for (let j = 0; j < 5; j++) {
             const tile = document.createElement("td");
             tile.innerHTML = "<div></div>";
-            tile.addEventListener("click", function() {
+            tile.addEventListener("click", async function() {
                 const selected = document.querySelector(".selected");
                 removeTile(tile);
                 if (selected) {
@@ -50,8 +50,19 @@ function setUpPage() {
                     expandTable(tile);
 
                     if (document.querySelectorAll("#userPile td").length === 0) {
-                        alert("You win!");
-                        window.location.href = "start.html";
+                        const isValid = await fetch('/api/checkBoard', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                board: getBoard(),
+                            })
+                        }).then(response => response.json());
+                        if (isValid) {
+                            alert("You win!");
+                            window.location.href = "start.html";
+                        } else {
+                            alert("Invalid word");
+                        }
                     }
                 }
             });
@@ -88,6 +99,20 @@ function setUpPage() {
     localStorage.setItem("numTiles", startingTiles);
     
     mockWebSocket(players, startingTiles);
+}
+
+function getBoard() {
+    const board = document.getElementById("board");
+    let rows = [];
+    for (let i = 0; i < board.children.length; i++) {
+        let row = [];
+        for (let j = 0; j < board.children[i].children.length; j++) {
+            let letter = board.children[i].children[j].children[0].innerText
+            row.push(letter === "" ? " " : letter);
+        }
+        rows.push(row);
+    }
+    return rows;
 }
 
 function peel() {

@@ -14,6 +14,11 @@ app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
 
+apiRouter.post('/checkBoard', (req, res) => {
+    const board = req.body.board;
+    res.send(checkBoard(board));
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -21,7 +26,7 @@ app.listen(port, () => {
 // add words for testing
 const words = new Set();
 fs.readFileSync('words.txt', 'utf8').split('\n').forEach(line => {
-    const word = line.toLowerCase().trim();
+    const word = line.trim();
     if (word.length > 0) {
         words.add(word);
     }
