@@ -3,6 +3,7 @@
 <head>
     <title>User Profile</title>
 
+    <script src="profile.js"></script>
     <link rel="stylesheet" href="main.css">
     <!-- Include bootstrap CSS framework -->
     <link
@@ -58,18 +59,7 @@
         </div>
     </main>
     <script>
-        // Get the username from local storage
-        let username = localStorage.getItem("username");
-        if (username) {
-            document.getElementById("username-display").innerText = "Player: " + username;
-        }
-
-        localStorage.setItem("numWins", 3);
-        localStorage.setItem("highestScoringGame", 72);
-
-        document.getElementById("numWins").innerText = localStorage.getItem("numWins");
-        document.getElementById("highestScoringGame").innerText = localStorage.getItem("highestScoringGame");
-        document.getElementById("Username").innerText = username;
+        setUpProfile();
     </script>
     <footer class="bg-secondary">
         <div>

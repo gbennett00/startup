@@ -31,6 +31,10 @@ apiRouter.post('/score', (req, res) => {
     res.send(score.toString());
 });
 
+apiRouter.get('/score', (_req, res) => {
+    res.send(highScore.toString());
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
