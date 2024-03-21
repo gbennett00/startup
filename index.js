@@ -43,7 +43,7 @@ apiRouter.post('/user/create', async (req, res) => {
     console.log('creating user: ' + username);
     const result = await db.createUser(username, password);
     if (result.success) {
-        // TODO: set cookie with authToken
+        setAuthCookie(res, result.authToken);
         res.send({ id: result.id });
     } else {
         res.status(409).send({ msg: 'username already exists' });
@@ -51,6 +51,14 @@ apiRouter.post('/user/create', async (req, res) => {
 });
 
 // TODO: add login user route (input: username, password, output: id with authToken in cookie or error)
+
+function setAuthCookie(res, authToken) {
+    res.cookie('authToken', authToken, { 
+        secure: true, 
+        httpOnly: true,
+        sameSite: 'strict'
+    });
+}
 
 // TODO: add getMe endpoint (input: authToken in cookie, output: username or error)
 
