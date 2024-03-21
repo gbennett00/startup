@@ -31,9 +31,19 @@ apiRouter.post('/score', (req, res) => {
     res.send(score.toString());
 });
 
+// TODO: get highScore and numWins from database
 apiRouter.get('/profile', (_req, res) => {
     res.send({ score: highScore, wins: numWins });
 });
+
+// TODO: add create user route (input: username, password, output: id with authToken in cookie or errror)
+        // stores username and hashed password in database
+
+// TODO: add login user route (input: username, password, output: id with authToken in cookie or error)
+
+// TODO: add getMe endpoint (input: authToken in cookie, output: username or error)
+
+// TODO: add delete user route (input: id, output: success or error) && requires admin priveledges
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -114,6 +124,8 @@ function getScore(board) {
     return score;
 }
 
+
+// TODO: highScore and numWins should be stored in a database
 let highScore = 0;
 let numWins = 0;
 function updateHighScore(score) {

@@ -14,3 +14,11 @@ const db = client.db('rental');
   console.log(`Unable to connect to database with ${url} because ${ex.message}`);
   process.exit(1);
 });
+
+// TODO: add function to create user (create hash and auth token here)
+
+// TODO: add function to get logged in user info by username (highScore, numWins, etc.)
+
+// TODO: add function to get logged in user info by authToken (username, highScore, numWins, etc.)
+
+// TODO: add function to delete user
