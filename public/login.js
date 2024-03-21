@@ -21,19 +21,30 @@ function login() {
     }
 }
 
-function signup() {
+async function signup() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    if (database.has(username)) {
-        alert('Username already exists');
-    } else if (username == '' || password == '') {
+    if (username == '' || password == '') {
         alert('Username and password cannot be empty');
+        return;
+    }
+    const response = await fetch('/api/user/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            username: username, 
+            password: password 
+        })
+    });
+    if (response.status === 409) {
+        alert(response.msg);
     } else {
         database.set(username, password);
         saveDatabase();
         localStorage.setItem('username', username);
-        window.location = "start.html"; // Redirecting to other page.
-        return false;
+        window.location = "start.html"; // Redirecting to other page.;
     }
 }
 

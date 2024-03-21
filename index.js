@@ -40,7 +40,7 @@ apiRouter.get('/profile', (_req, res) => {
 apiRouter.post('/user/create', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log('creating user backend: ' + username);
+    console.log('creating user: ' + username);
     const result = await db.createUser(username, password);
     if (result.success) {
         // TODO: set cookie with authToken
