@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const db = require('./database');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -36,8 +37,18 @@ apiRouter.get('/profile', (_req, res) => {
     res.send({ score: highScore, wins: numWins });
 });
 
-// TODO: add create user route (input: username, password, output: id with authToken in cookie or errror)
-        // stores username and hashed password in database
+apiRouter.post('/user/create', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log('creating user backend: ' + username);
+    const result = await db.createUser(username, password);
+    if (result.success) {
+        // TODO: set cookie with authToken
+        res.send({ id: result.id });
+    } else {
+        res.status(409).send({ msg: 'username already exists' });
+    }
+});
 
 // TODO: add login user route (input: username, password, output: id with authToken in cookie or error)
 

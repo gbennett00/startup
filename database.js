@@ -1,10 +1,13 @@
 const { MongoClient } = require('mongodb');
-const config = require('./config');
+const config = require('./dbConfig.json');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 
 const client = new MongoClient(url);
-const db = client.db('rental');
+const db = client.db('wordblitz');
+const users = db.collection('users');
 
 (async function testConnection() {
   await client.connect();
@@ -15,10 +18,27 @@ const db = client.db('rental');
   process.exit(1);
 });
 
-// TODO: add function to create user (create hash and auth token here)
+async function createUser(username, password) {
+  if (false) {  // TODO: check if username already exists
+    return { success: false, error: 'username already exists' };
+  } else {
+    const passwordHash = bcrypt.hashSync(password, 10);
+    const user = {
+      username: username,
+      password: passwordHash,
+      authToken: uuid.v4(),
+      highScore: 0,
+      numWins: 0
+    };
+    await users.insertOne(user);
+    return { success: true, authToken: user.authToken, id: user._id };
+  }
+}
 
 // TODO: add function to get logged in user info by username (highScore, numWins, etc.)
 
 // TODO: add function to get logged in user info by authToken (username, highScore, numWins, etc.)
 
 // TODO: add function to delete user
+
+module.exports = { createUser };
