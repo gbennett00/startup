@@ -27,6 +27,7 @@ async function createUser(username, password) {
       username: username,
       password: passwordHash,
       authToken: uuid.v4(),
+      isAdmin: false,     // admins must be created through the database
       highScore: 0,
       numWins: 0
     };
@@ -52,11 +53,19 @@ async function getUserByAuthToken(authToken) {
   return await users.findOne({ authToken });
 }
 
-// TODO: add function to get logged in user info by username (highScore, numWins, etc.)
+async function getAllUsers() {
+  return await users.find().toArray();
+}
 
-// TODO: add function to delete user
 async function deleteUser(authToken) {
   return await users.deleteOne({ authToken });
 }
 
-module.exports = { createUser, loginUser, getUser, getUserByAuthToken, deleteUser };
+async function isAdmin(authToken) {
+  const user = await getUserByAuthToken(authToken);
+  return user && user.isAdmin;
+}
+
+// TODO: add function to get logged in user info by username (highScore, numWins, etc)
+
+module.exports = { createUser, loginUser, getUserByAuthToken, deleteUser, isAdmin, getAllUsers };

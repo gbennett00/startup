@@ -78,7 +78,7 @@ apiRouter.get('/user/me', async (req, res) => {
         const authToken = req.cookies['authToken'];
         const user = await db.getUserByAuthToken(authToken);
         if (user) {
-            res.send({ username: user.username });
+            res.send({ username: user.username, isAdmin: user.isAdmin });
         } else {
             res.status(401).send({ msg: 'invalid authToken' });
         }
@@ -87,7 +87,6 @@ apiRouter.get('/user/me', async (req, res) => {
     }
 });
 
-// TODO: add delete user route (input: id, output: success or error) && requires admin priveledges
 apiRouter.delete('/user/delete', async (req, res) => {
     if (req.cookies) {
         const authToken = req.cookies['authToken'];
@@ -100,6 +99,21 @@ apiRouter.delete('/user/delete', async (req, res) => {
         }
     } else {
         res.status(401).send({ success: false, msg: 'no authToken' });
+    }
+});
+
+// TODO: add get all user route (output: list of users & their info) && requires admin priveledges
+apiRouter.get('/user/all', async (req, res) => {
+    const authToken = req.cookies['authToken'];
+    if (!await db.isAdmin(authToken)) {
+        res.status(401).send({ msg: 'unauthorized' });
+        return;
+    }
+    const users = await db.getAllUsers();
+    if (users) {
+        res.send({ users: users });
+    } else {
+        res.status(404).send({ msg: 'user not found' });
     }
 });
 
