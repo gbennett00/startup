@@ -70,3 +70,11 @@ This is how I plan to use each of the following technologies:
 - **Calls to third party endpoints** - Calls a quote API and displays the quote on the about page
 - **Backend service endpoints** - Endpoints that verify all words on a board are valid, score a board, and return a user's high score and number of wins
 - **Fronted calls service endpoints** - The frontend calls the endpoints to verify and score a board anytime all tiles are played. It uses the profile endpoint to display a user's game statistics. 
+
+## Login Deliverable
+- **Prerequisites** - done
+- **Supports new user registration** - done
+- **Supports exisitng user authentication** - done
+- **Stores application data in MongoDB** - user information is stored in and read from MongoDB
+- **Stores and retrieves credentials in MongoDB** - user password is stored as hash in DB and is compared at login
+- **Restricts application functionality based upon authentication** - Users with admin priveledges are able to see all users in their profile page, while users without this authorization only see their own statistics. 
