@@ -29,3 +29,19 @@ async function setUpProfile() {
     document.getElementById("highestScoringGame").innerText = response.score;
     document.getElementById("Username").innerText = username;
 }
+
+async function deleteProfile() {
+    await fetch("/api/user/delete", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.msg);
+        if (data.success) {
+            window.location = "index.html";
+        }
+    });
+}

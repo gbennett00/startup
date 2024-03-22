@@ -88,6 +88,20 @@ apiRouter.get('/user/me', async (req, res) => {
 });
 
 // TODO: add delete user route (input: id, output: success or error) && requires admin priveledges
+apiRouter.delete('/user/delete', async (req, res) => {
+    if (req.cookies) {
+        const authToken = req.cookies['authToken'];
+        console.log('deleting user with authToken: ' + authToken);
+        const success = await db.deleteUser(authToken);
+        if (success) {
+            res.send({ success: true, msg: 'user deleted' });
+        } else {
+            res.status(401).send({ success: false, msg: 'invalid authToken' });
+        }
+    } else {
+        res.status(401).send({ success: false, msg: 'no authToken' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

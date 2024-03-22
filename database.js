@@ -55,5 +55,8 @@ async function getUserByAuthToken(authToken) {
 // TODO: add function to get logged in user info by username (highScore, numWins, etc.)
 
 // TODO: add function to delete user
+async function deleteUser(authToken) {
+  return await users.deleteOne({ authToken });
+}
 
-module.exports = { createUser, loginUser, getUser, getUserByAuthToken };
+module.exports = { createUser, loginUser, getUser, getUserByAuthToken, deleteUser };
