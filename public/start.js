@@ -1,3 +1,22 @@
+async function setUsername() {
+   // Get the username from local storage
+  let username = await fetch('/api/user/me', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }).then(response => response.json())
+  .then(data => {
+      if (data.username) {
+          return data.username;
+      } else {
+          alert('You are not logged in. Please log in to view your profile.');
+          window.location = "index.html";
+      }
+  });
+  document.getElementById("username-display").innerText = "Player: " + username;
+}
+
 function createGame() {
   const gamePin = generatePin();
   localStorage.setItem("gamePin", gamePin);

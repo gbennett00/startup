@@ -1,6 +1,20 @@
-function setUpPage() {
+async function setUpPage() {
     // Display username
-    const username = localStorage.getItem("username");
+    const username = await fetch('/api/user/me', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.username) {
+            return data.username;
+        } else {
+            alert('You are not logged in. Please log in to play.');
+            window.location = "index.html";
+        }
+    });
     const display = document.getElementById("username-display");
     if (username && display) {
         display.textContent = "Player: " + username;

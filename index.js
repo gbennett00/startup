@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
 const app = express();
 const db = require('./database');
 
@@ -7,6 +8,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(express.static('public'));
+app.use(cookieParser());
 
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
@@ -72,12 +74,16 @@ function setAuthCookie(res, authToken) {
 }
 
 apiRouter.get('/user/me', async (req, res) => {
-    const authToken = req.cookies.authToken;
-    const user = await db.getUserByAuthToken(authToken);
-    if (user) {
-        res.send({ username: user.username });
+    if (req.cookies) {
+        const authToken = req.cookies['authToken'];
+        const user = await db.getUserByAuthToken(authToken);
+        if (user) {
+            res.send({ username: user.username });
+        } else {
+            res.status(401).send({ msg: 'invalid authToken' });
+        }
     } else {
-        res.status(401).send({ msg: 'invalid authToken' });
+        res.status(401).send({ msg: 'no authToken' });
     }
 });
 

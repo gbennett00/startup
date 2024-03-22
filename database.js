@@ -56,4 +56,4 @@ async function getUserByAuthToken(authToken) {
 
 // TODO: add function to delete user
 
-module.exports = { createUser, loginUser };
+module.exports = { createUser, loginUser, getUser, getUserByAuthToken };

@@ -35,15 +35,11 @@
                   <a class="nav-link" href="about.html">About</a>
                 </li>
               </menu>
-              <h4 id="username-display" class="m-3">Player: Sarah</h2>
+              <h4 id="username-display" class="m-3"></h2>
             </nav>
 
             <script>
-              // Get the username from local storage
-              let username = localStorage.getItem("username");
-              if (username) {
-                  document.getElementById("username-display").innerText = "Player: " + username;
-              }
+              setUsername();
             </script>
           </header>
         <main>
