@@ -51,6 +51,18 @@ apiRouter.post('/user/create', async (req, res) => {
 });
 
 // TODO: add login user route (input: username, password, output: id with authToken in cookie or error)
+apiRouter.post('/user/login', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log('logging in user: ' + username);
+    const result = await db.loginUser(username, password);
+    if (result.success) {
+        setAuthCookie(res, result.authToken);
+        res.send({ id: result.id });
+    } else {
+        res.status(401).send({ msg: 'invalid username or password' });
+    }
+});
 
 function setAuthCookie(res, authToken) {
     res.cookie('authToken', authToken, { 

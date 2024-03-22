@@ -35,6 +35,15 @@ async function createUser(username, password) {
   }
 }
 
+async function loginUser(username, password) {
+  const user = await getUser(username);
+  if (user && bcrypt.compareSync(password, user.password)) {
+    return { success: true, authToken: user.authToken, id: user._id };
+  } else {
+    return { success: false };
+  }
+}
+
 async function getUser(username) {
   return await users.findOne({ username: username });
 }
