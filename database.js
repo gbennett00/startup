@@ -48,9 +48,11 @@ async function getUser(username) {
   return await users.findOne({ username: username });
 }
 
-// TODO: add function to get logged in user info by username (highScore, numWins, etc.)
+async function getUserByAuthToken(authToken) {
+  return await users.findOne({ authToken });
+}
 
-// TODO: add function to get logged in user info by authToken (username, highScore, numWins, etc.)
+// TODO: add function to get logged in user info by username (highScore, numWins, etc.)
 
 // TODO: add function to delete user
 

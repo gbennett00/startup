@@ -50,7 +50,6 @@ apiRouter.post('/user/create', async (req, res) => {
     }
 });
 
-// TODO: add login user route (input: username, password, output: id with authToken in cookie or error)
 apiRouter.post('/user/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -72,7 +71,15 @@ function setAuthCookie(res, authToken) {
     });
 }
 
-// TODO: add getMe endpoint (input: authToken in cookie, output: username or error)
+apiRouter.get('/user/me', async (req, res) => {
+    const authToken = req.cookies.authToken;
+    const user = await db.getUserByAuthToken(authToken);
+    if (user) {
+        res.send({ username: user.username });
+    } else {
+        res.status(401).send({ msg: 'invalid authToken' });
+    }
+});
 
 // TODO: add delete user route (input: id, output: success or error) && requires admin priveledges
 
