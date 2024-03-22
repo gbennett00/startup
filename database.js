@@ -19,8 +19,8 @@ const users = db.collection('users');
 });
 
 async function createUser(username, password) {
-  if (false) {  // TODO: check if username already exists
-    return { success: false, error: 'username already exists' };
+  if (await getUser(username)) { 
+    return { success: false };
   } else {
     const passwordHash = bcrypt.hashSync(password, 10);
     const user = {
@@ -33,6 +33,10 @@ async function createUser(username, password) {
     await users.insertOne(user);
     return { success: true, authToken: user.authToken, id: user._id };
   }
+}
+
+async function getUser(username) {
+  return await users.findOne({ username: username });
 }
 
 // TODO: add function to get logged in user info by username (highScore, numWins, etc.)

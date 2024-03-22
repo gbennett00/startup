@@ -39,7 +39,7 @@ async function signup() {
         })
     });
     if (response.status === 409) {
-        alert(response.msg);
+        alert('Username already exists');
     } else {
         database.set(username, password);
         saveDatabase();
