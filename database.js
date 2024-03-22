@@ -54,4 +54,4 @@ async function getUser(username) {
 
 // TODO: add function to delete user
 
-module.exports = { createUser };
+module.exports = { createUser, loginUser };

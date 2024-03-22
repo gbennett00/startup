@@ -9,13 +9,24 @@ if (localStorage.getItem('users') == null) {
     updateDatabase();
 }
 
-function login() {
+async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    if (database.has(username) && database.get(username) == password) {
+    const response = await fetch('/api/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            username: username, 
+            password: password 
+        })
+    });
+
+    if (response.status === 200) {
+        // TODO : remove this save when other functions rely on db instead of localStorage
         localStorage.setItem('username', username);
         window.location = "start.html"; // Redirecting to other page.
-        return false;
     } else {
         alert('Login failed');
     }
@@ -41,6 +52,7 @@ async function signup() {
     if (response.status === 409) {
         alert('Username already exists');
     } else {
+        // TODO : remove these saves when other functions rely on db instead of localStorage
         database.set(username, password);
         saveDatabase();
         localStorage.setItem('username', username);
