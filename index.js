@@ -117,6 +117,21 @@ apiRouter.get('/user/all', async (req, res) => {
     }
 });
 
+const games = [];
+
+apiRouter.post('/game/create', async (req, res) => {
+    const authToken = req.cookies['authToken'];
+    const user = await db.getUserByAuthToken(authToken);
+    if (!user) {
+        res.status(401).send({ msg: 'invalid authToken' });
+        return;
+    }
+    const game = new Game();
+    game.players.push(user);
+    games.push(game);
+    res.send({ gameID: game.gameID });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -204,5 +219,21 @@ function updateHighScore(score) {
     numWins++;      // score is only updated when you win
     if (score > highScore) {
         highScore = score;
+    }
+}
+
+class Game {
+    constructor() {
+        this.gameID = this.generatePin();
+        this.players = [];
+    }
+
+    generatePin() {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let gamePin = '';
+        for (let i = 0; i < 4; i++) {
+          gamePin += letters.charAt(Math.floor(Math.random() * 26));
+        }
+        return gamePin;
     }
 }

@@ -17,22 +17,37 @@ async function setUsername() {
   document.getElementById("username-display").innerText = "Player: " + username;
 }
 
-function createGame() {
-  const gamePin = generatePin();
-  localStorage.setItem("gamePin", gamePin);
-  const main = document.querySelector("main");
-  main.innerHTML = 
-        `<div class="text-center">
-            <h1>Game Pin: ${gamePin}</h1>
-            <button onclick="startGame()" class="btn btn-primary" id="startGame">Start Game</button>
+async function createGame() {
+  const response = await fetch('/api/game/create', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }).then(response => response.json());
 
-            <div style="padding: 5vh 0">
-              <h2>Players</h2>
-              <ul class="list-group" id="playerList">
-              </ul>
-            </div>
-        </div>`;
-  addPlayers();
+  if (response.gameID) {
+    localStorage.setItem("gamePin", response.gameID);
+    const username = localStorage.getItem("username");
+    if (username === null) {
+      alert("Please login before creating a game");
+      return;
+    }
+    const main = document.querySelector("main");
+    main.innerHTML = 
+          `<div class="text-center">
+              <h1>Game Pin: ${response.gameID}</h1>
+              <button onclick="startGame()" class="btn btn-primary" id="startGame">Start Game</button>
+  
+              <div style="padding: 5vh 0">
+                <h2>Players</h2>
+                <ul class="list-group" id="playerList">
+                  <li class="list-group-item">${username}</li>
+                </ul>
+              </div>
+          </div>`;
+  } else {
+      alert('Failed to create game');
+  }
 }
 
 async function addPlayers() {
@@ -73,5 +88,9 @@ function generatePin() {
 function joinGame() {
   const gamePin = document.getElementById("gamePinInput").value;
   localStorage.setItem("gamePin", gamePin);
-  window.location.href = "game.html";
+  const main = document.querySelector("main");
+  main.innerHTML = 
+        `<div class="text-center">
+            <h1>Waiting on game admin to start</h1>
+        </div>`;
 }
