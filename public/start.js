@@ -85,12 +85,24 @@ function generatePin() {
   return gamePin;
 }
 
-function joinGame() {
-  const gamePin = document.getElementById("gamePinInput").value;
-  localStorage.setItem("gamePin", gamePin);
-  const main = document.querySelector("main");
-  main.innerHTML = 
-        `<div class="text-center">
-            <h1>Waiting on game admin to start</h1>
-        </div>`;
+async function joinGame() {
+  const response = await fetch('/api/game/join', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({gameID: document.getElementById("gamePinInput").value})
+  }).then(response => response.json());
+
+  if (response.success) {
+    const gamePin = document.getElementById("gamePinInput").value;
+    localStorage.setItem("gamePin", gamePin);
+    const main = document.querySelector("main");
+    main.innerHTML = 
+          `<div class="text-center">
+              <h1>Waiting on game admin to start</h1>
+          </div>`;
+  } else {
+      alert('Failed to join game: ' + response.msg);
+  }
 }

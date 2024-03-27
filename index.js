@@ -132,6 +132,24 @@ apiRouter.post('/game/create', async (req, res) => {
     res.send({ gameID: game.gameID });
 });
 
+apiRouter.post('/game/join', async (req, res) => {
+    const gameID = req.body.gameID;
+    const authToken = req.cookies['authToken'];
+    const user = await db.getUserByAuthToken(authToken);
+    if (!user) {
+        res.status(401).send({ msg: 'invalid authToken' });
+        return;
+    }
+    const game = games.find(g => g.gameID === gameID);
+    if (game) {
+        console.log(user.username + ' joining game ' + gameID);
+        game.players.push(user);
+        res.send({ success: true });
+    } else {
+        res.status(404).send({ msg: 'game not found' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
