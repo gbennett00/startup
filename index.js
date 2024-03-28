@@ -169,7 +169,7 @@ let connections = [];
 let id = 0;
 
 wss.on('connection', (ws) => {
-    const connection = { id: ++id, alive: true, ws: ws, gameID: null, username: null};
+    const connection = { id: ++id, alive: true, ws: ws, gameID: null, username: null, host: false };
     connections.push(connection);
 
     // Forward messages to everyone in the same game
@@ -177,6 +177,7 @@ wss.on('connection', (ws) => {
         const message = JSON.parse(data);
         connection.gameID = message.gameID;
         connection.username = message.username;
+        connection.host = message.host;
         if (message.type !== 'create') {
             connections.forEach((c) => {
                 if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
@@ -196,7 +197,7 @@ wss.on('connection', (ws) => {
 
         connections.forEach((c) => {
             if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
-                c.ws.send(JSON.stringify({ type: 'leave', username: connection.username }));
+                c.ws.send(JSON.stringify({ type: 'leave', username: connection.username, host: connection.host }));
             }
         });
     });
