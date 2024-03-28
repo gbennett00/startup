@@ -9,7 +9,7 @@ socket.onopen = (event) => {
 
 // Display messages we receive from our friends
 socket.onmessage = async (event) => {
-  const data = JSON.parse(event.data);
+    const data = JSON.parse(event.data);
   const playerList = document.getElementById("playerList");
   if (data.type === 'join') {
     if (!!playerList) {
@@ -29,6 +29,8 @@ socket.onmessage = async (event) => {
     } else {
       alert(data.username + ' left game');
     }
+  } else if (data.type === 'start') {
+    window.location = "game.html";
   }
 };
 
@@ -52,7 +54,7 @@ async function setUsername() {
       } else {
           alert('You are not logged in. Please log in to view your profile.');
           window.location = "index.html";
-      }
+                }
   });
   document.getElementById("username-display").innerText = "Player: " + username;
 }
@@ -91,28 +93,13 @@ async function createGame() {
   }
 }
 
-async function addPlayers() {
-  localStorage.removeItem("players");
-  const playerList = document.getElementById("playerList");
-  const players = ['John', 'Jane', 'Doe', 'Bob', 'Alice'];
-  playerList.innerHTML = '';
-  let currPlayers = [];
-  for (let i = 0; i < 5; i++) {
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    await delay(i % 2 === 0 ? 250 : 1000);
-    console.log("Adding player: " + players[i]);
-    playerList.innerHTML += `<li class="list-group-item">${players[i]}</li>`;
-    currPlayers.push(players[i]);
-    localStorage.setItem("players", JSON.stringify(currPlayers));
-  }
-}
-
 function startGame() {
   const gamePin = localStorage.getItem("gamePin");
   if (gamePin === null) {
     alert("No game pin found");
     return;
   }
+  socket.send(JSON.stringify({type: 'start', gameID: gamePin}));
   window.location.href = "game.html";
 }
 
