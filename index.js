@@ -145,7 +145,7 @@ apiRouter.post('/game/join', async (req, res) => {
     if (game) {
         console.log(user.username + ' joining game ' + gameID);
         game.players.push(user);
-        res.send({ success: true });
+        res.send({ success: true, username: user.username });
     } else {
         res.status(404).send({ msg: 'game not found' });
     }
@@ -169,15 +169,17 @@ let connections = [];
 let id = 0;
 
 wss.on('connection', (ws) => {
-    const connection = { id: ++id, alive: true, ws: ws };
+    const connection = { id: ++id, alive: true, ws: ws, gameID: null };
     connections.push(connection);
 
-    // Forward messages to everyone except the sender
+    // Forward messages to everyone in the same game
     ws.on('message', function message(data) {
+        const message = JSON.parse(data);
+        connection.gameID = message.gameID;
         connections.forEach((c) => {
-        if (c.id !== connection.id) {
-            c.ws.send(data);
-        }
+            if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
+                c.ws.send(data);
+            }
         });
     });
 
@@ -186,7 +188,7 @@ wss.on('connection', (ws) => {
         const pos = connections.findIndex((o, i) => o.id === connection.id);
 
         if (pos >= 0) {
-        connections.splice(pos, 1);
+            connections.splice(pos, 1);
         }
     });
 
@@ -201,10 +203,10 @@ setInterval(() => {
     connections.forEach((c) => {
         // Kill any connection that didn't respond to the ping last time
         if (!c.alive) {
-        c.ws.terminate();
+            c.ws.terminate();
         } else {
-        c.alive = false;
-        c.ws.ping();
+            c.alive = false;
+            c.ws.ping();
         }
     });
 }, 10000);

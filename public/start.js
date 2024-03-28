@@ -1,3 +1,30 @@
+// Adjust the webSocket protocol to what is being used for HTTP
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+// Display that we have opened the webSocket
+socket.onopen = (event) => {
+  console.log('websocket opened');
+};
+
+// Display messages we receive from our friends
+socket.onmessage = async (event) => {
+  const text = await event.data.text();
+  const data = JSON.parse(text);
+  const playerList = document.getElementById("playerList");
+  if (!!playerList) {
+    playerList.innerHTML += `<li class="list-group-item">${data.username}</li>`;
+  } else {
+    alert(data.username + ' joined game: ' + data.gameID);
+  }
+};
+
+// If the webSocket is closed then disable the interface
+socket.onclose = (event) => {
+  socket.send('user left game')
+  console.log('websocket closed');
+};
+
 async function setUsername() {
    // Get the username from local storage
   let username = await fetch('/api/user/me', {
@@ -32,6 +59,7 @@ async function createGame() {
       alert("Please login before creating a game");
       return;
     }
+    socket.send(JSON.stringify({gameID: response.gameID, username: username}));
     const main = document.querySelector("main");
     main.innerHTML = 
           `<div class="text-center">
@@ -96,6 +124,7 @@ async function joinGame() {
 
   if (response.success) {
     const gamePin = document.getElementById("gamePinInput").value;
+    socket.send(JSON.stringify({gameID: gamePin, username: response.username}));
     localStorage.setItem("gamePin", gamePin);
     const main = document.querySelector("main");
     main.innerHTML = 
