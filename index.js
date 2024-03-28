@@ -128,7 +128,7 @@ apiRouter.post('/game/create', async (req, res) => {
         return;
     }
     const game = new Game();
-    game.players.push(user);
+    game.players.set(user.username, [0, 12]);
     games.push(game);
     res.send({ gameID: game.gameID });
 });
@@ -144,8 +144,24 @@ apiRouter.post('/game/join', async (req, res) => {
     const game = games.find(g => g.gameID === gameID);
     if (game) {
         console.log(user.username + ' joining game ' + gameID);
-        game.players.push(user);
+        game.players.set(user.username, [0, 12]);
         res.send({ success: true, username: user.username });
+    } else {
+        res.status(404).send({ msg: 'game not found' });
+    }
+});
+
+apiRouter.get('/players', async (req, res) => {
+    const authToken = req.cookies['authToken'];
+    const user = await db.getUserByAuthToken(authToken);
+    if (!user) {
+        res.status(401).send({ msg: 'invalid authToken' });
+        return;
+    }
+    const game = games.find(g => g.players.has(user.username));
+    if (game) {
+        console.log(user.username + ' getting players ' + game.gameID);
+        res.send({ success: true, players: Array.from(game.players.keys()) });
     } else {
         res.status(404).send({ msg: 'game not found' });
     }
@@ -167,6 +183,7 @@ server.on('upgrade', (request, socket, head) => {
 // keep track of all connections
 let connections = [];
 let id = 0;
+const startTypes = ['create', 'join', 'start', 'leave'];
 
 wss.on('connection', (ws) => {
     const connection = { id: ++id, alive: true, ws: ws, gameID: null, username: null, host: false };
@@ -177,14 +194,16 @@ wss.on('connection', (ws) => {
         const message = JSON.parse(data);
         connection.gameID = message.gameID;
         connection.username = message.username;
-        connection.host = message.host;
-        if (message.type !== 'create') {
-            connections.forEach((c) => {
-                if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
-                    c.ws.send(JSON.stringify(message));
-                }
-            });
-        }
+        if (startTypes.includes(message.type)) {
+            connection.host = message.host;
+            if (message.type !== 'create') {
+                connections.forEach((c) => {
+                    if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
+                        c.ws.send(JSON.stringify(message));
+                    }
+                });
+            }
+        } 
     });
 
     // Remove the closed connection so we don't try to forward anymore
@@ -310,7 +329,7 @@ function updateHighScore(score) {
 class Game {
     constructor() {
         this.gameID = this.generatePin();
-        this.players = [];
+        this.players = new Map();
     }
 
     generatePin() {

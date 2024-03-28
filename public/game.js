@@ -1,3 +1,23 @@
+// Adjust the webSocket protocol to what is being used for HTTP
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+// Display that we have opened the webSocket
+socket.onopen = (event) => {
+  alert('websocket opened');
+};
+
+// Display messages we receive from our friends
+socket.onmessage = async (event) => {
+   alert("Received message: " + event.data);
+};
+
+// If the webSocket is closed then return to start
+socket.onclose = (event) => {
+  alert('connection reset');
+  window.location = "start.html";
+};
+
 async function setUpPage() {
     // Display username
     const username = await fetch('/api/user/me', {
@@ -28,6 +48,9 @@ async function setUpPage() {
         alert("Please create or join a game");
         window.location.href = "start.html";
     }
+
+    // Initialize websocket connection
+    socket.send(JSON.stringify({type: 'init', gameID: gamePin, username: username}));
 
     // initialize pile
     const pile = document.getElementById("userPile");
@@ -61,6 +84,7 @@ async function setUpPage() {
                 removeTile(tile);
                 if (selected) {
                     replaceTile(selected, tile);
+                    // socket.send(JSON.stringify({type: 'update', gameID: gamePin, username: username, board: getBoard()}));
                     expandTable(tile);
 
                     const finishedBoard = getBoard();
@@ -94,23 +118,28 @@ async function setUpPage() {
     }
     board.replaceChildren(...rows);
 
-    // Create player table
+    const players = await fetch('/api/players', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json().then(data => data.players));
+
+    console.log(players);
+    
+
     const table = document.getElementById("playerTable");
-    rows = [document.createElement("tr")];
-    rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Player</h2>';
-    rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Tiles played</h2>';
-
-    const players = JSON.parse(localStorage.getItem("players"));
     if (players) {
+        // Create player table
+        rows = [document.createElement("tr")];
+        rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Player</h2>';
+        rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Tiles played</h2>';
         for (let player of players) {
-            const row = document.createElement("tr");
-            row.id = player;
-            row.appendChild(document.createElement("td")).innerHTML = player;
-            row.appendChild(document.createElement("td")).innerHTML = "0/12";
-            rows.push(row);
-
-            localStorage.setItem(player + "-tiles-played", "0");
-            localStorage.setItem(player + "-tiles", "12");
+            if (player !== username) {
+                const row = document.createElement("tr");
+                row.id = player;
+                row.appendChild(document.createElement("td")).innerHTML = player;
+                row.appendChild(document.createElement("td")).innerHTML = "0/12";
+                rows.push(row);
+            }
         }
     }
     table.replaceChildren(...rows);
@@ -118,9 +147,6 @@ async function setUpPage() {
     const startingTiles = 12;
     const totalTiles = document.getElementById("numTiles");
     totalTiles.innerText = startingTiles;
-    localStorage.setItem("numTiles", startingTiles);
-    
-    // mockWebSocket(players, startingTiles);
 }
 
 function getBoard() {
@@ -296,46 +322,4 @@ function pileClickListener() {
         prev.classList.remove("selected");
     }
     tile.children[0].classList.add("selected");
-}
-
-async function mockWebSocket(players, tiles) {
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    while (tiles > 0) {
-        await delay(Math.random() * 1000);
-        const player = players[Math.floor(Math.random() * players.length)];
-        console.log("Updating %s's tiles", player);
-        let tilesPlayed = parseInt(localStorage.getItem(player + "-tiles-played"));
-        let tilesLeft = parseInt(localStorage.getItem(player + "-tiles"));
-
-        if (Math.floor(Math.random() * 10) < 9) {
-            // player places tile
-            tilesPlayed++;
-            if (tilesPlayed == tilesLeft) {
-                // split
-                if (tiles < players.length) {
-                    // bananagrams!!
-                    alert("Player " + player + " wins");
-                    window.location.href = "start.html";
-                    return;
-                }
-                for (const player of players) {
-                    const tilesLeft = parseInt(localStorage.getItem(player + "-tiles"));
-                    localStorage.setItem(player + "-tiles", tilesLeft + 1);
-                }
-                tilesLeft++;
-                tiles -= players.length;
-            }
-            document.getElementById(player).children[1].innerText = tilesPlayed + "/" + tilesLeft;
-        } else if (tiles > 3) {
-            // random player peels
-            tilesLeft += 3;
-            tiles -= 3;
-            document.getElementById(player).children[1].innerText = tilesPlayed + "/" + tilesLeft;
-        }
-
-        localStorage.setItem(player + "-tiles-played", tilesPlayed);
-        localStorage.setItem(player + "-tiles", tilesLeft);
-        const totalTiles = document.getElementById("numTiles");
-        totalTiles.innerText = tiles;
-    }
 }
