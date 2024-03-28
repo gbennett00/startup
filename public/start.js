@@ -9,13 +9,21 @@ socket.onopen = (event) => {
 
 // Display messages we receive from our friends
 socket.onmessage = async (event) => {
-  const text = await event.data.text();
-  const data = JSON.parse(text);
+  const data = JSON.parse(event.data);
   const playerList = document.getElementById("playerList");
-  if (!!playerList) {
-    playerList.innerHTML += `<li class="list-group-item">${data.username}</li>`;
-  } else {
-    alert(data.username + ' joined game: ' + data.gameID);
+  if (data.type === 'join') {
+    if (!!playerList) {
+      playerList.innerHTML += `<li class="list-group-item">${data.username}</li>`;
+    } else {
+      alert(data.username + ' joined game: ' + data.gameID);
+    }
+  } else if (data.type === 'leave') {
+    if (!!playerList) {
+      console.log('removing player: ' + data.username);
+      playerList.innerHTML = playerList.innerHTML.replace(`<li class="list-group-item">${data.username}</li>`, '');
+    } else {
+      alert(data.username + ' left game');
+    }
   }
 };
 
@@ -59,7 +67,7 @@ async function createGame() {
       alert("Please login before creating a game");
       return;
     }
-    socket.send(JSON.stringify({gameID: response.gameID, username: username}));
+    socket.send(JSON.stringify({type: 'create', gameID: response.gameID, username: username}));
     const main = document.querySelector("main");
     main.innerHTML = 
           `<div class="text-center">
@@ -124,7 +132,7 @@ async function joinGame() {
 
   if (response.success) {
     const gamePin = document.getElementById("gamePinInput").value;
-    socket.send(JSON.stringify({gameID: gamePin, username: response.username}));
+    socket.send(JSON.stringify({type: 'join', gameID: gamePin, username: response.username}));
     localStorage.setItem("gamePin", gamePin);
     const main = document.querySelector("main");
     main.innerHTML = 

@@ -169,18 +169,21 @@ let connections = [];
 let id = 0;
 
 wss.on('connection', (ws) => {
-    const connection = { id: ++id, alive: true, ws: ws, gameID: null };
+    const connection = { id: ++id, alive: true, ws: ws, gameID: null, username: null};
     connections.push(connection);
 
     // Forward messages to everyone in the same game
     ws.on('message', function message(data) {
         const message = JSON.parse(data);
         connection.gameID = message.gameID;
-        connections.forEach((c) => {
-            if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
-                c.ws.send(data);
-            }
-        });
+        connection.username = message.username;
+        if (message.type !== 'create') {
+            connections.forEach((c) => {
+                if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
+                    c.ws.send(JSON.stringify(message));
+                }
+            });
+        }
     });
 
     // Remove the closed connection so we don't try to forward anymore
@@ -190,6 +193,12 @@ wss.on('connection', (ws) => {
         if (pos >= 0) {
             connections.splice(pos, 1);
         }
+
+        connections.forEach((c) => {
+            if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
+                c.ws.send(JSON.stringify({ type: 'leave', username: connection.username }));
+            }
+        });
     });
 
     // Respond to pong messages by marking the connection alive
