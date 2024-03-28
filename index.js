@@ -1,4 +1,5 @@
 const express = require('express');
+const { WebSocketServer } = require('ws');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -150,9 +151,63 @@ apiRouter.post('/game/join', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+// create websocket server
+const wss = new WebSocketServer({ noServer: true });
+
+server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, socket => {
+        wss.emit('connection', socket, request);
+    });
+});
+
+// keep track of all connections
+let connections = [];
+let id = 0;
+
+wss.on('connection', (ws) => {
+    const connection = { id: ++id, alive: true, ws: ws };
+    connections.push(connection);
+
+    // Forward messages to everyone except the sender
+    ws.on('message', function message(data) {
+        connections.forEach((c) => {
+        if (c.id !== connection.id) {
+            c.ws.send(data);
+        }
+        });
+    });
+
+    // Remove the closed connection so we don't try to forward anymore
+    ws.on('close', () => {
+        const pos = connections.findIndex((o, i) => o.id === connection.id);
+
+        if (pos >= 0) {
+        connections.splice(pos, 1);
+        }
+    });
+
+    // Respond to pong messages by marking the connection alive
+    ws.on('pong', () => {
+        connection.alive = true;
+    });
+});
+
+// keep active connections alive
+setInterval(() => {
+    connections.forEach((c) => {
+        // Kill any connection that didn't respond to the ping last time
+        if (!c.alive) {
+        c.ws.terminate();
+        } else {
+        c.alive = false;
+        c.ws.ping();
+        }
+    });
+}, 10000);
 
 // add words for testing
 const words = new Set();
