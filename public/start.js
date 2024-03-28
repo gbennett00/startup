@@ -27,10 +27,10 @@ socket.onmessage = async (event) => {
   }
 };
 
-// If the webSocket is closed then disable the interface
+// If the webSocket is closed then return to start
 socket.onclose = (event) => {
-  socket.send('user left game')
-  console.log('websocket closed');
+  alert('connection reset');
+  window.location = "start.html";
 };
 
 async function setUsername() {
