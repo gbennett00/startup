@@ -4,12 +4,17 @@ const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
 // Display that we have opened the webSocket
 socket.onopen = (event) => {
-  alert('websocket opened');
+  console.log('websocket opened');
 };
 
 // Display messages we receive from our friends
 socket.onmessage = async (event) => {
-   alert("Received message: " + event.data);
+    const data = JSON.parse(event.data);
+    console.log(data);
+    if (data.score !== null) {
+        const row = document.getElementById(data.username);
+        row.children[1].innerText = data.score + "/12";
+    }
 };
 
 // If the webSocket is closed then return to start
@@ -81,10 +86,12 @@ async function setUpPage() {
             tile.innerHTML = "<div></div>";
             tile.addEventListener("click", async function() {
                 const selected = document.querySelector(".selected");
-                removeTile(tile);
+                if (removeTile(tile)) {
+                    socket.send(JSON.stringify({type: 'remove', gameID: gamePin, username: username}));
+                }
                 if (selected) {
                     replaceTile(selected, tile);
-                    // socket.send(JSON.stringify({type: 'update', gameID: gamePin, username: username, board: getBoard()}));
+                    socket.send(JSON.stringify({type: 'place', gameID: gamePin, username: username}));
                     expandTable(tile);
 
                     const finishedBoard = getBoard();
@@ -223,7 +230,7 @@ function replaceTile(selected, tile) {
 function removeTile(tile) {
     if (tile.innerHTML === "<div></div>") {
         // do nothing if blank tile
-        return;
+        return false;
     }
     const pile = document.getElementById("userPile");
     let lastRow = pile.children[pile.children.length-1];
@@ -239,6 +246,7 @@ function removeTile(tile) {
 
     // remove from board
     tile.innerHTML = "<div></div>";
+    return true;
 }
 
 function expandTable(tile) {

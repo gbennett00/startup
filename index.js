@@ -203,7 +203,17 @@ wss.on('connection', (ws) => {
                     }
                 });
             }
-        } 
+        } else {
+            if (message.type === 'place' || message.type === 'remove') {
+                const game = games.find(g => g.gameID === connection.gameID);
+                game.players.get(connection.username)[0] += (message.type === 'place') ? 1 : -1;
+                connections.forEach((c) => {
+                    if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
+                        c.ws.send(`{"username":"${connection.username}","score":${game.players.get(connection.username)[0]}}`);
+                    }
+                });
+            }
+        }
     });
 
     // Remove the closed connection so we don't try to forward anymore
