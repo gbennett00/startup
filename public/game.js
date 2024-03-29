@@ -13,7 +13,7 @@ socket.onmessage = async (event) => {
     console.log(data);
     if (data.score !== null) {
         const row = document.getElementById(data.username);
-        row.children[1].innerText = data.score + "/12";
+        row.children[1].innerText = data.score + "/14";
     }
 };
 
@@ -55,6 +55,9 @@ async function setUpPage() {
     }
 
     // Initialize websocket connection
+    while (socket.readyState !== 1) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
     socket.send(JSON.stringify({type: 'init', gameID: gamePin, username: username}));
 
     // initialize pile
@@ -144,7 +147,7 @@ async function setUpPage() {
                 const row = document.createElement("tr");
                 row.id = player;
                 row.appendChild(document.createElement("td")).innerHTML = player;
-                row.appendChild(document.createElement("td")).innerHTML = "0/12";
+                row.appendChild(document.createElement("td")).innerHTML = "0/14";
                 rows.push(row);
             }
         }

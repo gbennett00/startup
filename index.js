@@ -128,7 +128,7 @@ apiRouter.post('/game/create', async (req, res) => {
         return;
     }
     const game = new Game();
-    game.players.set(user.username, [0, 12]);
+    game.players.set(user.username, 0);
     games.push(game);
     res.send({ gameID: game.gameID });
 });
@@ -144,7 +144,7 @@ apiRouter.post('/game/join', async (req, res) => {
     const game = games.find(g => g.gameID === gameID);
     if (game) {
         console.log(user.username + ' joining game ' + gameID);
-        game.players.set(user.username, [0, 12]);
+        game.players.set(user.username, 0);
         res.send({ success: true, username: user.username });
     } else {
         res.status(404).send({ msg: 'game not found' });
@@ -206,10 +206,13 @@ wss.on('connection', (ws) => {
         } else {
             if (message.type === 'place' || message.type === 'remove') {
                 const game = games.find(g => g.gameID === connection.gameID);
-                game.players.get(connection.username)[0] += (message.type === 'place') ? 1 : -1;
+                const score = (message.type === 'place') 
+                    ? game.players.get(connection.username) +  1
+                    : game.players.get(connection.username) -  1;
+                game.players.set(connection.username, score);
                 connections.forEach((c) => {
                     if (c.id !== connection.id && c.gameID !== null && c.gameID === connection.gameID) {
-                        c.ws.send(`{"username":"${connection.username}","score":${game.players.get(connection.username)[0]}}`);
+                        c.ws.send(`{"username":"${connection.username}","score":${game.players.get(connection.username)}}`);
                     }
                 });
             }
