@@ -78,3 +78,9 @@ This is how I plan to use each of the following technologies:
 - **Stores application data in MongoDB** - user information is stored in and read from MongoDB
 - **Stores and retrieves credentials in MongoDB** - user password is stored as hash in DB and is compared at login
 - **Restricts application functionality based upon authentication** - Users with admin priveledges are able to see all users in their profile page, while users without this authorization only see their own statistics. 
+
+## WebSocket Deliverable
+- **Backend listens for WebSocket connection** - done
+- **Frontend makes WebSocket connection** - done 
+- **Data sent over WebSocket connection** - From the start page, the websocket connection is used to notify players when other players join, and, for the host of the game, it is used to send the usernames of people that are in the game. From the game page, it is used to share the progress of other players (how many tiles they've played). 
+- **WebSocket data displayed in the application interface** - The table of usernames that the host player sees comes from WebSocket data as well as the table on the right of the game page that displays the progress of other players (number of tiles played comes from WebSocket).
