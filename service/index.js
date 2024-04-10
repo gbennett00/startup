@@ -255,7 +255,7 @@ setInterval(() => {
 
 // add words for testing
 const words = new Set();
-fs.readFileSync('public/words.txt', 'utf8').split('\n').forEach(line => {
+fs.readFileSync('words.txt', 'utf8').split('\n').forEach(line => {
     const word = line.trim();
     if (word.length > 0) {
         words.add(word);
