@@ -1,38 +1,59 @@
 import React from 'react';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Login } from './login/login';
+import { Start } from './start/start';
+import { Game } from './game/game';
+import { Profile } from './profile/profile';
+import { About } from './about/about';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
-export default function App() {
+function App() {
   return (
-    <div className='body'>
-      <header class="bg-primary container-fluid">
-          <nav class="navbar fixed-top navbar-dark">
-            <a class="navbar-brand">WordBlitz<sup>&reg;</sup></a>
-            <menu class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="start.html">Start</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="game.html">Game</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="profile.html">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-              </li>
-            </menu>
-          </nav>
-        </header>
-      <main>App components go here</main>
-      <footer class="bg-secondary">
-          <div>
-            <span class="text-reset">Author: Garrett B.</span>
-            <a class="text-light px-3" href="https://github.com/gbennett00/startup">GitHub</a>
-          </div>
-        </footer>
-    </div>);
+    <BrowserRouter>
+      <div className='body'>
+        <header className='bg-primary container-fluid'>
+            <nav className='navbar fixed-top navbar-dark'>
+              <a className='navbar-brand'>WordBlitz<sup>&reg;</sup></a>
+              <menu className='navbar-nav'>
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to=''>Home</NavLink>
+                </li>
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='start'>Start</NavLink>
+                </li>
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='game'>Game</NavLink>
+                </li>
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='profile'>Profile</NavLink>
+                </li>
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='about'>About</NavLink>
+                </li>
+              </menu>
+            </nav>
+          </header>
+        <Routes>
+          <Route path='/' element={<Login />} exact />
+          <Route path='/start' element={<Start />} />
+          <Route path='/game' element={<Game />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+        <footer className='bg-secondary'>
+            <div>
+              <span className='text-reset'>Author: Garrett B.</span>
+              <a className='text-light px-3' href='https://github.com/gbennett00/startup'>GitHub</a>
+            </div>
+          </footer>
+      </div>
+    </BrowserRouter>);
 }
+
+function NotFound() {
+  return <main className='container-fluid bg-secondary text-center'>404: Return to sender. Address unknowwn. </main>;
+}
+
+export default App;
