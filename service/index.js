@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const db = require('./database');
 
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
+const port = process.argv.length > 2 ? process.argv[2] : 5173;
 
 app.use(express.json());
 app.use(express.static('public'));
