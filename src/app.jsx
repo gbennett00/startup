@@ -5,10 +5,15 @@ import { Start } from './start/start';
 import { Game } from './game/game';
 import { Profile } from './profile/profile';
 import { About } from './about/about';
+import { AuthState } from './login/authState';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
     <BrowserRouter>
       <div className='body'>
@@ -19,15 +24,21 @@ function App() {
                 <li className='nav-item'>
                   <NavLink className='nav-link' to=''>Home</NavLink>
                 </li>
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='start'>Start</NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='game'>Game</NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='profile'>Profile</NavLink>
-                </li>
+                {authState === AuthState.Authenticated  && 
+                  <li className='nav-item'>
+                    <NavLink className='nav-link' to='start'>Start</NavLink>
+                  </li>
+                }
+                {authState === AuthState.Authenticated  && 
+                  <li className='nav-item'>
+                    <NavLink className='nav-link' to='game'>Game</NavLink>
+                  </li>
+                }
+                {authState === AuthState.Authenticated  && 
+                  <li className='nav-item'>
+                    <NavLink className='nav-link' to='profile'>Profile</NavLink>
+                  </li>
+                }
                 <li className='nav-item'>
                   <NavLink className='nav-link' to='about'>About</NavLink>
                 </li>
@@ -35,7 +46,15 @@ function App() {
             </nav>
           </header>
         <Routes>
-          <Route path='/' element={<Login />} exact />
+          <Route path='/' element={
+            <Login 
+              userName={userName} 
+              authState={authState} 
+              onAuthChange={(userName, authState) => {
+                setUserName(userName);
+                setAuthState(authState);
+              }}/>
+            } exact />
           <Route path='/start' element={<Start />} />
           <Route path='/game' element={<Game />} />
           <Route path='/profile' element={<Profile />} />

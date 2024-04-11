@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const db = require('./database');
 
-const port = process.argv.length > 2 ? process.argv[2] : 5173;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -64,6 +64,12 @@ apiRouter.post('/user/login', async (req, res) => {
     } else {
         res.status(401).send({ msg: 'invalid username or password' });
     }
+});
+
+apiRouter.delete('/user/logout', async (req, res) => {
+    console.log('logout user');
+    res.clearCookie('authToken');
+    res.status(204).end();
 });
 
 function setAuthCookie(res, authToken) {
