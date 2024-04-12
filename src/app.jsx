@@ -57,7 +57,7 @@ function App() {
               }}/>
             } exact />
           <Route path='/start' element={<Start gamePin={gamePin} setGamePin={setGamePin}/>} />
-          <Route path='/game' element={<Game />} />
+          <Route path='/game' element={<Game userName={userName} gamePin={gamePin}/>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />

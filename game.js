@@ -1,28 +1,3 @@
-// Adjust the webSocket protocol to what is being used for HTTP
-const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-
-// Display that we have opened the webSocket
-socket.onopen = (event) => {
-  console.log('websocket opened');
-};
-
-// Display messages we receive from our friends
-socket.onmessage = async (event) => {
-    const data = JSON.parse(event.data);
-    console.log(data);
-    if (data.score !== null) {
-        const row = document.getElementById(data.username);
-        row.children[1].innerText = data.score + "/14";
-    }
-};
-
-// If the webSocket is closed then return to start
-socket.onclose = (event) => {
-  alert('connection reset');
-  window.location = "start.html";
-};
-
 async function setUpPage() {
     // Display username
     const username = await fetch('/api/user/me', {
@@ -171,46 +146,6 @@ function getBoard() {
         rows.push(row);
     }
     return rows;
-}
-
-function peel() {
-    const selected = document.querySelector(".selected");
-    if (!selected) {
-        alert("Please select a tile to peel");
-        return;
-    }
-
-    const tiles = parseInt(localStorage.getItem("numTiles"));
-    if (tiles < 3) {
-        alert("Not enough tiles to peel");
-        return;
-    }
-    localStorage.setItem("numTiles", tiles - 2);
-    const totalTiles = document.getElementById("numTiles");
-    totalTiles.innerText = tiles - 2;
-    
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const pile = document.getElementById("userPile");
-    let lastRow = pile.children[pile.children.length-1];
-    for (let i = 0; i < 3; i++) {
-        const newTile = document.createElement("td");
-        newTile.innerHTML = "<div>" + letters[Math.floor(Math.random() * 26)] + "</div>";
-        newTile.addEventListener("click", pileClickListener);
-        if (lastRow.children.length === 3) {
-            const newRow = document.createElement("tr");
-            pile.appendChild(newRow);
-            lastRow = newRow;
-        }
-        if (i === 0) {
-            const td = selected.parentElement;
-            console.log(td);
-            console.log(td.parentElement);
-            td.innerHTML = newTile.innerHTML;
-        } else {
-            lastRow.appendChild(newTile);
-        }
-    }
-  
 }
 
 function replaceTile(selected, tile) {
