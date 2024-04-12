@@ -5,13 +5,12 @@ import { Hosting } from './hosting';
 import { StartState } from './startState';
 import { useNavigate } from 'react-router-dom';
 
-export function Start() {
+export function Start({gamePin, setGamePin}) {
   const navigate = useNavigate();
 
   const [startState, setStartState] = React.useState(StartState.StartHome); 
   const [playerList, setPlayerList] = React.useState(JSON.parse(localStorage.getItem('playerList')) || []); 
-  const [gamePin, setGamePin] = React.useState('');
-
+  
   // Adjust the webSocket protocol to what is being used for HTTP
   const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
   const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);

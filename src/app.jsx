@@ -13,6 +13,7 @@ function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('username') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
+  const [gamePin, setGamePin] = React.useState(localStorage.getItem('gamePin') || '');
 
   return (
     <BrowserRouter>
@@ -44,7 +45,7 @@ function App() {
                 </li>
               </menu>
             </nav>
-          </header>
+        </header>
         <Routes>
           <Route path='/' element={
             <Login 
@@ -55,7 +56,7 @@ function App() {
                 setAuthState(authState);
               }}/>
             } exact />
-          <Route path='/start' element={<Start />} />
+          <Route path='/start' element={<Start gamePin={gamePin} setGamePin={setGamePin}/>} />
           <Route path='/game' element={<Game />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/about' element={<About />} />
@@ -66,7 +67,7 @@ function App() {
               <span className='text-reset'>Author: Garrett B.</span>
               <a className='text-light px-3' href='https://github.com/gbennett00/startup'>GitHub</a>
             </div>
-          </footer>
+        </footer>
       </div>
     </BrowserRouter>);
 }

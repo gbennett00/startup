@@ -24,6 +24,7 @@ export function StartHome({socket, setStartState, setPlayerList, setGamePin}) {
           localStorage.setItem('playerList', JSON.stringify([username]));
           setStartState(StartState.Hosting);
           setGamePin(response.gameID);
+          localStorage.setItem("gamePin", response.gameID);
         } else {
             alert('Failed to create game');
         }
