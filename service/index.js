@@ -336,8 +336,8 @@ function getScore(board) {
 
 
 // TODO: highScore and numWins should be stored in a database
-let highScore = 0;
-let numWins = 0;
+let highScore = 5;
+let numWins = 2;
 function updateHighScore(score) {
     numWins++;      // score is only updated when you win
     if (score > highScore) {

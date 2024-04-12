@@ -58,7 +58,12 @@ function App() {
             } exact />
           <Route path='/start' element={<Start gamePin={gamePin} setGamePin={setGamePin}/>} />
           <Route path='/game' element={<Game userName={userName} gamePin={gamePin}/>} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile' element={
+            <Profile userName={userName} onAuthChange={(userName, authState) => {
+              setUserName(userName);
+              setAuthState(authState);
+            }}/>
+          } />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
