@@ -30,7 +30,7 @@ export function Unauthenticated(props) {
   async function signup() {
     console.log("signup");
 
-    if (username == '' || password == '') {
+    if (userName == '' || password == '') {
         alert('Username and password cannot be empty');
         return;
     }
@@ -47,8 +47,8 @@ export function Unauthenticated(props) {
     if (response.status === 409) {
         alert('Username already exists');
     } else if (response.status === 200) {
-        localStorage.setItem('username', username);
-        props.onLogin(username);
+        localStorage.setItem('username', userName);
+        props.onLogin(userName);
     } else {
         alert('Signup failed');
     }
