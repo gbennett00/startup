@@ -84,3 +84,10 @@ This is how I plan to use each of the following technologies:
 - **Frontend makes WebSocket connection** - done 
 - **Data sent over WebSocket connection** - From the start page, the websocket connection is used to notify players when other players join, and, for the host of the game, it is used to send the usernames of people that are in the game. From the game page, it is used to share the progress of other players (how many tiles they've played). 
 - **WebSocket data displayed in the application interface** - The table of usernames that the host player sees comes from WebSocket data as well as the table on the right of the game page that displays the progress of other players (number of tiles played comes from WebSocket).
+
+## React Deliverable
+I understand that the way I implemented my game page using a DOM manipulator hook component isn't best practice, but for this assignment I thought it would be the best path. The more proper React structure would be to convert all the original DOM queries/updates to rely on state instead, but that would've been a nightmare of a refactor. In addition, by not refactoring that way, I was able to gain a better understanding of how useEffect works (and still have time to do homework for other classes this week). 
+- **Bundled using Vite** - done
+- **Multiple functional react components** - Each of my pages has been converted to a functional React component. The login and start pages have multiple components that are activated based on state following a similar pattern as shown in simon-react. 
+- **React router** - Routing between Login, Start, Game, Profile, About and NotFound components. 
+- **React hooks** - useState used to track state in almost every component, including App, Start, and Unauthenticated (Login). useEffect is used to populate the game page. 
