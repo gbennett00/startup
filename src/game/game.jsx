@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 export function Game(props) {
   const navigate = useNavigate();
 
+  const [players, setPlayers] = React.useState([]);
+
   // Adjust the webSocket protocol to what is being used for HTTP
   const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
   const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
@@ -24,7 +26,9 @@ export function Game(props) {
       console.log(data);
       if (data.score !== null) {
           const row = document.getElementById(data.username);
-          row.children[1].innerText = data.score + "/14";
+          if (row) {
+            row.children[1].innerText = data.score + "/14";
+          }
       }
   };
 
@@ -45,6 +49,15 @@ export function Game(props) {
       navigate('/start');
   }
 
+  if (players.length === 0) {
+    fetch('/api/players', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json()
+    .then(data => setPlayers(data.players)));
+  }
+
   return (
     <div className="main">
       <div className="column">
@@ -54,7 +67,7 @@ export function Game(props) {
       <div className="column text-center">
           <table id="board"></table>        
       </div>
-      <DOMManipulator />
+      <DOMManipulator players={players} userName={props.userName}/>
       <Summary gamePin={props.gamePin}/>
     </div>
   );

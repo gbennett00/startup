@@ -78,7 +78,7 @@ export function DOMManipulator(props) {
             rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Player</h2>';
             rows[0].appendChild(document.createElement("th")).innerHTML = '<h2>Tiles played</h2>';
             for (let player of props.players) {
-                if (player !== username) {
+                if (player !== props.userName) {
                     const row = document.createElement("tr");
                     row.id = player;
                     row.appendChild(document.createElement("td")).innerHTML = player;
