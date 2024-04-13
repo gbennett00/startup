@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Summary } from './summary';
-import { Pile } from './pile';
-import { Board } from './board';
+import { DOMManipulator } from './DOMManipulator';
 import './game.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +15,7 @@ export function Game(props) {
   // Display that we have opened the webSocket
   socket.onopen = (event) => {
     console.log('websocket opened');
+    socket.send(JSON.stringify({type: 'init', gameID: props.gamePin, username: props.username}));
   };
 
   // Display messages we receive from our friends
@@ -47,8 +47,14 @@ export function Game(props) {
 
   return (
     <div className="main">
-      <Pile />
-      <Board />
+      <div className="column">
+          <h1>Tiles</h1>
+          <table id="userPile"></table>
+      </div>
+      <div className="column text-center">
+          <table id="board"></table>        
+      </div>
+      <DOMManipulator />
       <Summary gamePin={props.gamePin}/>
     </div>
   );
