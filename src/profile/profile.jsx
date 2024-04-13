@@ -48,7 +48,7 @@ export function Profile({ userName, onAuthChange }) {
     <main>
         <div>
             <h1 className="text-center">User Profile</h1>
-            <table id="profile-table" class="table table-striped-columns">
+            <table id="profile-table" className="table table-striped-columns">
                 <thead>
                     <tr>
                         <td>Username:</td>
